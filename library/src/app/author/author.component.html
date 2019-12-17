@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="search-user">
+        <input type="text" name="search" [(ngModel)]="searchText" placeholder="Search"><pre></pre>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let author of Authors">
+            <td>{{author.author_id}}</td>
+            <td>{{author.first_name}}</td>
+            <td>{{author.last_name}}</td>
+  
+            <button type="button" (click)="onSelect(user)" class="btn btn-primary">Get ID</button>&nbsp;&nbsp;
+            <button type="button" (click)="DeleteSelectedUser(user)" class="btn btn-primary">Delete</button>&nbsp;&nbsp;
+            <button type="button" (click)="UpdateUser(user)" class="btn btn-primary">Update</button>
+          </tr>
+  
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  
+  <router-outlet></router-outlet>
