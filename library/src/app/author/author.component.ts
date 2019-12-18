@@ -10,13 +10,21 @@ import { all, allSettled } from 'q';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { map } from "rxjs/operators"; 
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { faTrash} from '@fortawesome/free-solid-svg-icons';
+import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   templateUrl: './author.component.html',
+  styleUrls:['./author.component.css']
 })
 export class AuthorComponent implements OnInit{
+  faTrash = faTrash;
+  faUserEdit = faUserEdit;
 
   Authors: any;
+  Delete: any;
+  searchText: any;
+  p: number = 1;
 
 
   constructor(private AuthorService: AuthorService, private router: Router, private http: HttpClient){
@@ -43,6 +51,24 @@ export class AuthorComponent implements OnInit{
       console.log("alma222", this.Authors)
      });
 
+    }
+
+    AddAuthor(){
+      this.router.navigate(['/addAuthor']);
+    }
+
+    DeleteAuthor(selectedItem: any){
+      console.log("Selected item Id: ", selectedItem.author_id);
+      this.Delete= selectedItem.author_id;
+     return this.http.delete("http://localhost:3000/author/"+ this.Delete).subscribe(response => console.log(response));
+    }
+
+    EditAuthor(selectedItem: any){
+      this.router.navigate(['/editAuthor/'+ selectedItem.author_id +'/' + selectedItem.first_name +'/' + selectedItem.last_name]);
+      console.log("Selected item id: ", selectedItem.author_id, selectedItem.first_name, selectedItem.last_name);
+      //this.Update= selectedItem.EmpID;
+     //return this.http.put("http://localhost:3000/employees/" + this.Update, this.Update).subscribe(response => console.log(response));
+  
     }
   
 

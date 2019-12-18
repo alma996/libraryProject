@@ -60,5 +60,41 @@ author.post('/author', (req, res) => {
       })
   })
 
+  author.delete('/:id', (req, res)=>{
+    const authorID = req.params.id
+Author.destroy({
+      where: {
+        author_id:authorID
+        
+      }
+    })
+    .then(function (deletedRecord) {
+      if(deletedRecord === 1){
+          res.status(200).json({message:"Deleted successfully"});          
+      }
+      else
+      {
+          res.status(404).json({message:"record not found"})
+      }
+  })
+  .catch(function (error){
+      res.status(500).json(error);
+  })
+  })
+
+  author.put('/:id', (req, res, next) => {
+    Author.update(
+      {first_name: req.body.first_name,
+      last_name: req.body.last_name},
+      {returning: true, where: {author_id: req.params.id} }
+    )
+    .then(Author.findByPk(req.params.id))
+    .then(function(updatedBook) {
+    res.json(updatedBook)
+    })
+    .catch(next)
+   })
+
+
 
 module.exports = author

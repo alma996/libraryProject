@@ -9,22 +9,27 @@
             <th>Id</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let author of Authors">
+          <tr *ngFor="let author of Authors | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
             <td>{{author.author_id}}</td>
             <td>{{author.first_name}}</td>
             <td>{{author.last_name}}</td>
   
-            <button type="button" (click)="onSelect(user)" class="btn btn-primary">Get ID</button>&nbsp;&nbsp;
-            <button type="button" (click)="DeleteSelectedUser(user)" class="btn btn-primary">Delete</button>&nbsp;&nbsp;
-            <button type="button" (click)="UpdateUser(user)" class="btn btn-primary">Update</button>
+            <button class="btn" (click)="DeleteAuthor(author)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
+            <button class="btn" (click)="EditAuthor(author)"><fa-icon [icon]="faUserEdit"></fa-icon></button>
           </tr>
   
         </tbody>
       </table>
+      <div class="pagination">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
     </div>
+
+    <button class="btn" (click)="AddAuthor()" class="btn btn-primary">Add Author</button>&nbsp;&nbsp;
   </div>
   
   

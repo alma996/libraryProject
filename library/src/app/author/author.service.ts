@@ -21,6 +21,16 @@ export class AuthorService {
 
   }
 
+  public addAuthors(obj){
+    return this.httpClient.post(this.baseUrl,obj, {
+      headers: new HttpHeaders({
+           'Content-Type':  'application/json',
+         })
+    }).pipe(map(data=>
+     data));
+
+  }
+
 
 
       

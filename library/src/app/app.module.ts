@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { HttpClientModule } from '@angular/common/http'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule, Routes } from '@angular/router'
 
 import { AppComponent } from './app.component'
@@ -12,12 +12,19 @@ import { HomeComponent } from './home/home.component'
 import { AuthenticationService } from './authentication.service'
 import { AuthGuardService } from './auth-guard.service'
 import { AuthorComponent } from './author/author.component'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { Ng2SearchPipeModule } from 'ng2-search-filter'
+import { NgxPaginationModule } from 'ngx-pagination'
+import {AddAuthorComponent} from './author/addAuthor/addAuthor.component';
+import {EditAuthorComponent} from './author/editAuthor/editAuthor.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'author', component: AuthorComponent },
+  { path: 'addAuthor', component: AddAuthorComponent },
+  { path: 'editAuthor/:author_id/:first_name/:last_name', component: EditAuthorComponent },
   {
     path: 'profile',
     component: ProfileComponent,
@@ -32,12 +39,18 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    AuthorComponent
+    AuthorComponent,
+    AddAuthorComponent,
+    EditAuthorComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
+    FontAwesomeModule,
+    Ng2SearchPipeModule,
+    NgxPaginationModule,
     RouterModule.forRoot(routes)
   ],
   providers: [AuthenticationService, AuthGuardService],
