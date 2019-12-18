@@ -15,6 +15,7 @@ import { AuthorService } from '../author.service';
 
 @Component({
   templateUrl: './editAuthor.component.html',
+  styleUrls:['./editAuthor.component.css']
 })
 export class EditAuthorComponent {
 

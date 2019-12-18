@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-md">
     <div class="row">
       <div class="search-user">
         <input type="text" name="search" [(ngModel)]="searchText" placeholder="Search"><pre></pre>
@@ -24,6 +24,7 @@
   
         </tbody>
       </table>
+
       <div class="pagination">
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </div>

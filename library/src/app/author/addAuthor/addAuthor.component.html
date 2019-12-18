@@ -1,8 +1,8 @@
-<div class="container-fluid">
+<div class="container-md">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <h2>Add new Author</h2>
     <form [formGroup]="registrationForm" (ngSubmit)="AddAuthor(registrationForm.value)">
-  <div class="form">
+  <div class="form container-md">
       <div class="form-group">
         <label>First Name</label>
         <input [class.is-invalid]="first_name.invalid
@@ -21,13 +21,16 @@
           <small class="text-danger" *ngIf="last_name.errors.required">Lat Name is required</small>
         </div>
       </div>
+      <div style="text-align: center;">
+      <button class="btn btn-primary" type="submit">Post User</button>&nbsp;&nbsp;
+    </div>
     </div>
   
   
   
   
   
-      <button class="btn btn-primary" type="submit">Post User</button>&nbsp;&nbsp;
+    
     </form>
   
    
