@@ -17,6 +17,10 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter'
 import { NgxPaginationModule } from 'ngx-pagination'
 import {AddAuthorComponent} from './author/addAuthor/addAuthor.component';
 import {EditAuthorComponent} from './author/editAuthor/editAuthor.component';
+import { GenreComponent } from './genre/genre.component';
+import { AddGenreComponent } from './genre/addGenre/addGenre.component';
+import { EditGenreComponent } from './genre/editGenre/editGenre.component'
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,6 +29,9 @@ const routes: Routes = [
   { path: 'author', component: AuthorComponent },
   { path: 'addAuthor', component: AddAuthorComponent },
   { path: 'editAuthor/:author_id/:first_name/:last_name', component: EditAuthorComponent },
+  { path: 'genre', component: GenreComponent },
+  { path: 'addGenre', component: AddGenreComponent },
+  { path: 'editGenre/:genre_id/:genre_name', component: EditGenreComponent },
   {
     path: 'profile',
     component: ProfileComponent,
@@ -41,7 +48,10 @@ const routes: Routes = [
     HomeComponent,
     AuthorComponent,
     AddAuthorComponent,
-    EditAuthorComponent
+    EditAuthorComponent,
+    GenreComponent,
+    AddGenreComponent,
+    EditGenreComponent
   ],
   imports: [
     BrowserModule,

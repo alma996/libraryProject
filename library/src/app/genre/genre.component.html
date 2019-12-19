@@ -1,0 +1,35 @@
+<div class="container-md">
+    <div class="row">
+      <div class="search-user">
+        <input type="text" name="search" [(ngModel)]="searchText" placeholder="Search"><pre></pre>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Genre Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let genre of Genres | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
+            <td>{{genre.genre_id}}</td>
+            <td>{{genre.genre_name}}</td>
+  
+            <button class="btn" (click)="DeleteGenre(genre)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
+            <button class="btn" (click)="EditGenre(genre)"><fa-icon [icon]="faUserEdit"></fa-icon></button>
+          </tr>
+  
+        </tbody>
+      </table>
+
+      <div class="pagination">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+
+    <button class="btn" (click)="AddGenre()" class="btn btn-primary">Add Genre</button>&nbsp;&nbsp;
+  </div>
+  
+  
+  <router-outlet></router-outlet>

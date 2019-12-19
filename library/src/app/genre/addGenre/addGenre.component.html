@@ -1,0 +1,33 @@
+<div class="container-md">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <h2>Add new Genre</h2>
+    <form [formGroup]="registrationForm" (ngSubmit)="AddGenre(registrationForm.value)">
+  <div class="form container-md">
+      <div class="form-group">
+        <label>Genre Name</label>
+        <input [class.is-invalid]="genre_name.invalid
+          && genre_name.touched" type="text" class="form-control" formControlName="genre_name" ngModel>
+  
+        <div *ngIf="genre_name.invalid && genre_name.touched">
+          <small *ngIf="genre_name.errors ?.required" class="text-danger">Genre Name is required</small>
+        </div>
+      </div>
+  
+     
+      <div style="text-align: center;">
+      <button class="btn btn-primary" type="submit">Post Genre</button>&nbsp;&nbsp;
+    </div>
+    </div>
+  
+  
+  
+  
+  
+    
+    </form>
+  
+   
+  </div>
+  
+  
+  <router-outlet></router-outlet>

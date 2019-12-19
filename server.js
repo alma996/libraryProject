@@ -14,9 +14,11 @@ app.use(
 
 var Users = require('./routes/Users')
 var Author = require('./routes/Author')
+var Genre = require('./routes/Genre')
 
 app.use('/users', Users)
 app.use('/author', Author)
+app.use('/genre', Genre)
 
 
 app.listen(port, function() {

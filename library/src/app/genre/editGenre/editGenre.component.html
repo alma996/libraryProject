@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <h2>Edit Genre</h2>
+    <form [formGroup]="registrationForm">
+  
+        <div class="form container-md">
+        <div class="form-group">
+            <input type="hidden" class="form-control" formControlName="genre_id" [(ngModel)]="genre_id">
+            </div>
+
+      <div class="form-group">
+        <label>Genre Name</label>
+        <input type="text" class="form-control" formControlName="genre_name" [(ngModel)]="genre_name">
+        </div>
+  
+  <div style="text-align: center;">
+      <button class="btn btn-primary" type="submit" (click)="EditGenre(registrationForm.value)" >Edit Genre</button>&nbsp;&nbsp;
+    </div>
+    <button class="btn btn-default" (click)="showSuccess()">Toastr Tester</button>
+    </div>
+    </form>
+  
+  </div>
+  
+  
+  <router-outlet></router-outlet>
