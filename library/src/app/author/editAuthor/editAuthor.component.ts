@@ -33,8 +33,8 @@ export class EditAuthorComponent {
 
         this.route.paramMap.subscribe(params => {
             this.author_id = params.get('author_id');
-            this.first_name = params.get('last_name');
-            this.last_name = params.get('first_name');
+            this.first_name = params.get('first_name');
+            this.last_name = params.get('last_name');
           })
 
         this.registrationForm = this.fb.group({
@@ -50,7 +50,7 @@ export class EditAuthorComponent {
           this.first_name = this.registrationForm.value.first_name,
           this.last_name = this.registrationForm.value.last_name,
       
-            console.log("Selected item Id: ", selectedItem.first_name);
+
             this.EditAuthor= selectedItem.author_id;
            return this.http.put("http://localhost:3000/author/" + this.author_id, selectedItem).subscribe(response => console.log(response));
           }

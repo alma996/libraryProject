@@ -11,15 +11,13 @@
         <label>Genre Name</label>
         <input type="text" class="form-control" formControlName="genre_name" [(ngModel)]="genre_name">
         </div>
-  
+
   <div style="text-align: center;">
       <button class="btn btn-primary" type="submit" (click)="EditGenre(registrationForm.value)" >Edit Genre</button>&nbsp;&nbsp;
     </div>
-    <button class="btn btn-default" (click)="showSuccess()">Toastr Tester</button>
     </div>
     </form>
   
   </div>
-  
-  
+  <button (click)="test()">Make a toast!</button>
   <router-outlet></router-outlet>

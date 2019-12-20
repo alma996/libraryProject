@@ -21,6 +21,10 @@ import { GenreComponent } from './genre/genre.component';
 import { AddGenreComponent } from './genre/addGenre/addGenre.component';
 import { EditGenreComponent } from './genre/editGenre/editGenre.component'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { MemberComponent } from './member/member.component';
+import { AddMemberComponent } from './member/addMember/addMember.component';
+import { EditMemberComponent } from './member/editMember/editMember.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,6 +36,9 @@ const routes: Routes = [
   { path: 'genre', component: GenreComponent },
   { path: 'addGenre', component: AddGenreComponent },
   { path: 'editGenre/:genre_id/:genre_name', component: EditGenreComponent },
+  { path: 'member', component: MemberComponent },
+  { path: 'addMember', component: AddMemberComponent },
+  { path: 'editMember/:member_id/:first_name/:last_name/:birth_date/:address/:email/:phone_number', component: EditMemberComponent },
   {
     path: 'profile',
     component: ProfileComponent,
@@ -51,7 +58,10 @@ const routes: Routes = [
     EditAuthorComponent,
     GenreComponent,
     AddGenreComponent,
-    EditGenreComponent
+    EditGenreComponent,
+    MemberComponent,
+    EditMemberComponent,
+    AddMemberComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +71,11 @@ const routes: Routes = [
     FontAwesomeModule,
     Ng2SearchPipeModule,
     NgxPaginationModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 1000,
+      positionClass: 'toast-bottom-right'
+    }),
     RouterModule.forRoot(routes)
   ],
   providers: [AuthenticationService, AuthGuardService],
