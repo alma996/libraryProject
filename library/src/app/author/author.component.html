@@ -17,9 +17,10 @@
             <td>{{author.author_id}}</td>
             <td>{{author.first_name}}</td>
             <td>{{author.last_name}}</td>
-  
+  <div class="end">
             <button class="btn" (click)="DeleteAuthor(author)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
             <button class="btn" (click)="EditAuthor(author)"><fa-icon [icon]="faUserEdit"></fa-icon></button>
+          </div>
           </tr>
   
         </tbody>

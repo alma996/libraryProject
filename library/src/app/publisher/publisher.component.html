@@ -1,0 +1,34 @@
+<div class="container-md">
+    <div class="row">
+      <div class="search-user">
+        <input type="text" name="search" [(ngModel)]="searchText" placeholder="Search"><pre></pre>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Publisher Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let publisher of Publishers | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
+            <td>{{publisher.publisher_name}}</td>
+  <div class="end">
+            <button class="btn" (click)="DeletePublisher(publisher)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
+            <button class="btn" (click)="EditPublisher(publisher)"><fa-icon [icon]="faUserEdit"></fa-icon></button>
+        </div>
+          </tr>
+  
+        </tbody>
+      </table>
+
+      <div class="pagination">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+
+    <button class="btn" (click)="AddPublisher()" class="btn btn-primary">Add Publisher</button>&nbsp;&nbsp;
+  </div>
+  
+  
+  <router-outlet></router-outlet>

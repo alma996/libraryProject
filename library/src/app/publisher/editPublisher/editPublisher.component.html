@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <h2>Edit Publisher</h2>
+    <form [formGroup]="registrationForm">
+  
+        <div class="form container-md col-6">
+            <div class="form-group">
+                <input type="hidden" class="form-control" formControlName="publisher_id" [(ngModel)]="publisher_id">
+                </div>
+
+      <div class="form-group">
+        <label>Publisher Name</label>
+        <input type="text" class="form-control" formControlName="publisher_name" [(ngModel)]="publisher_name">
+        </div>
+
+  <div style="text-align: center;">
+      <button class="btn btn-primary" type="submit" (click)="EditPublisher(registrationForm.value)" >Edit Publisher</button>&nbsp;&nbsp;
+    </div>
+    </div>
+    </form>
+  
+  </div>
+  <router-outlet></router-outlet>

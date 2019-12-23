@@ -25,6 +25,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { MemberComponent } from './member/member.component';
 import { AddMemberComponent } from './member/addMember/addMember.component';
 import { EditMemberComponent } from './member/editMember/editMember.component'
+import { MembershipComponent } from './membership/membership.component'
+import { EditMembershipComponent } from './membership/editMembership/editMembership.component'
+import { AddMembershipComponent } from './membership/addMembership/addMembership.component'
+import { PublisherComponent } from './publisher/publisher.component'
+import { EditPublisherComponent } from './publisher/editPublisher/editPublisher.component'
+import { AddPublisherComponent } from './publisher/addPublisher/addPublisher.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -39,6 +45,12 @@ const routes: Routes = [
   { path: 'member', component: MemberComponent },
   { path: 'addMember', component: AddMemberComponent },
   { path: 'editMember/:member_id/:first_name/:last_name/:birth_date/:address/:email/:phone_number', component: EditMemberComponent },
+  { path: 'membership', component: MembershipComponent },
+  { path: 'editMembership/:membership_id/:member_id/:date_of_payment/:year/:amount', component: EditMembershipComponent },
+  { path: 'addMembership', component: AddMembershipComponent },
+  { path: 'publisher', component: PublisherComponent },
+  { path: 'editPublisher/:publisher_id/:publisher_name', component: EditPublisherComponent },
+  { path: 'addPublisher', component: AddPublisherComponent },
   {
     path: 'profile',
     component: ProfileComponent,
@@ -61,7 +73,13 @@ const routes: Routes = [
     EditGenreComponent,
     MemberComponent,
     EditMemberComponent,
-    AddMemberComponent
+    AddMemberComponent,
+    MembershipComponent,
+    EditMembershipComponent,
+    AddMembershipComponent,
+    PublisherComponent,
+    EditPublisherComponent,
+    AddPublisherComponent,
   ],
   imports: [
     BrowserModule,

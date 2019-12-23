@@ -1,0 +1,33 @@
+<div class="container-md">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <h2>Add new Publisher</h2>
+    <form [formGroup]="registrationForm" (ngSubmit)="AddPublisher(registrationForm.value)">
+  <div class="form container-md">
+      <div class="form-group">
+        <label>Publisher Name</label>
+        <input [class.is-invalid]="publisher_name.invalid
+          && publisher_name.touched" type="text" class="form-control" formControlName="publisher_name" ngModel>
+  
+        <div *ngIf="publisher_name.invalid && publisher_name.touched">
+          <small *ngIf="publisher_name.errors ?.required" class="text-danger">Publisher name is required</small>
+        </div>
+      </div>
+  
+     
+      <div style="text-align: center;">
+      <button class="btn btn-primary" type="submit">Post Publisher</button>&nbsp;&nbsp;
+    </div>
+    </div>
+  
+  
+  
+  
+  
+    
+    </form>
+  
+   
+  </div>
+  
+  
+  <router-outlet></router-outlet>

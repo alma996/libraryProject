@@ -1,0 +1,41 @@
+<div class="container-md">
+    <div class="row">
+      <div class="search-user">
+        <input type="text" name="search" [(ngModel)]="searchText" placeholder="Search"><pre></pre>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Member First Name</th>
+            <th>meber Last Name</th>
+            <th>Date of payment</th>
+            <th>Year</th>
+            <th>Amount</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let membership of Memberships | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
+            <td>{{membership.member.first_name}}</td>
+            <td>{{membership.member.last_name}}</td>
+            <td>{{membership.date_of_payment}}</td>
+            <td>{{membership.year}}</td>
+            <td>{{membership.amount}}</td>
+  
+            <button class="btn" (click)="DeleteMembership(membership)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
+            <button class="btn" (click)="EditMembership(membership)"><fa-icon [icon]="faUserEdit"></fa-icon></button>
+          </tr>
+  
+        </tbody>
+      </table>
+
+      <div class="pagination">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+
+    <button class="btn" (click)="AddMembership()" class="btn btn-primary">Add Membership</button>&nbsp;&nbsp;
+  </div>
+  
+  
+  <router-outlet></router-outlet>

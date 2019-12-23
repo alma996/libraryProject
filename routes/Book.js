@@ -1,44 +1,64 @@
 const express = require('express')
-const membership = express.Router()
+const book = express.Router()
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 
-const Membership = require('../models/Membership')
-const Member = require('../models/Member')
+const Book = require('../models/Book')
+const Author = require('../models/Author')
+const Genre = require('../models/Genre')
+const Publisher = require('../models/Publisher')
 
-membership.use(cors())
+book.use(cors())
 
 process.env.SECRET_KEY = 'secret'
 
 
-membership.get('/membership', (req, res) => {
-    Member.hasMany(Membership, {foreignKey: 'member_id'})
-    Membership.belongsTo(Member, {foreignKey: 'member_id'})
+book.get('/book', (req, res) => {
+    Author.hasMany(Book, {foreignKey: 'author_id'})
+    Book.belongsTo(Author, {foreignKey: 'author_id'})
 
- Membership.findAll({
+    Genre.hasMany(Book, {foreignKey: 'genre_id'})
+    Book.belongsTo(Genre, {foreignKey: 'genre_id'})
+
+    Publisher.hasMany(Book, {foreignKey: 'publisher_id'})
+    Book.belongsTo(Publisher, {foreignKey: 'publisher_id'})
+
+ Book.findAll({
      include: [{
-         model: Member,
-         attributes: ['first_name', 'last_name']
-     }]
+         model: Author
+     },
+     {
+    model: Genre
+     },
+    {
+        model: Publisher
+    }]
     })
-    .then(membership => {
-      if (membership) {
-        res.json(membership)
+    .then(book => {
+      if (book) {
+        res.json(book)
       } else {
-        res.send('Membership dos not exist')
+        res.send('Book dos not exist')
       }
     })
     .catch(err => {
       res.send('error: ' + err)
     })
 })
+/*
+Book.post('/:id', (req, res) => {
+    const bookID = req.params.id
+    Author.hasMany(Book, {foreignKey: 'author_id'})
+    Book.belongsTo(Author, {foreignKey: 'author_id'})
 
-membership.post('/:id', (req, res) => {
-    const memberID = req.params.id
-    Member.hasMany(Membership, {foreignKey: 'member_id'})
-    Membership.belongsTo(Member, {foreignKey: 'member_id'})
-    const membershipData = {
-        member_id: memberID,
+    Genre.hasMany(Book, {foreignKey: 'genre_id'})
+    Book.belongsTo(Genre, {foreignKey: 'genre_id'})
+
+    Publisher.hasMany(Book, {foreignKey: 'publisher_id'})
+    Book.belongsTo(Publisher, {foreignKey: 'publisher_id'})
+
+    const BookData = {
+        book_id: bookID,
       date_of_payment: req.body.date_of_payment,
       year: req.body.year,
       amount: req.body.amount,
@@ -117,6 +137,7 @@ Membership.destroy({
     })
     .catch(next)
    })
+   */
 
 
-module.exports =  membership
+module.exports =  book

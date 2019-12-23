@@ -26,8 +26,10 @@
             <td>{{member.email}}</td>
             <td>{{member.phone_number}}</td>
   
+            <div class="end">
             <button class="btn" (click)="DeleteMember(member)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
             <button class="btn" (click)="EditMember(member)"><fa-icon [icon]="faUserEdit"></fa-icon></button>
+          </div>
           </tr>
   
         </tbody>
