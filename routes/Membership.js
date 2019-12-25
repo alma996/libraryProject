@@ -11,11 +11,12 @@ membership.use(cors())
 process.env.SECRET_KEY = 'secret'
 
 
-membership.get('/membership', (req, res) => {
+membership.get('/:id', (req, res) => {
     Member.hasMany(Membership, {foreignKey: 'member_id'})
     Membership.belongsTo(Member, {foreignKey: 'member_id'})
 
  Membership.findAll({
+   where: {member_id: req.params.id},
      include: [{
          model: Member,
          attributes: ['first_name', 'last_name']

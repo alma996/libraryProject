@@ -5,13 +5,14 @@ import { MembershipService } from './membership.service';
 import { NgForm } from '@angular/forms';
 import { NgModule } from '@angular/compiler/src/core';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { all, allSettled } from 'q';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { map } from "rxjs/operators"; 
+import { map, isEmpty } from "rxjs/operators"; 
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
+import { empty } from 'rxjs';
 
 @Component({
   templateUrl: './membership.component.html',
@@ -25,33 +26,40 @@ export class MembershipComponent implements OnInit{
   Delete: any;
   searchText: any;
   p: number = 1;
+  member_id: any;
+  date_of_payment: any;
+  membership_id: any;
 
 
-  constructor(private MembershipService: MembershipService, private router: Router, private http: HttpClient){
+  constructor(private MembershipService: MembershipService,private route: ActivatedRoute, private router: Router, private http: HttpClient){
   }
 
 
   ngOnInit(){
 
-      this.MembershipService.getAllMembership().subscribe((reponse)=>{
-        console.log(reponse)
-        this.Memberships=reponse
-       });
-      
+    this.route.paramMap.subscribe(params => {
+      this.member_id = params.get('member_id');
+    })
 
-  } 
+    this.http.get("http://localhost:3000/membership/"+ this.member_id).subscribe((response) =>{
+      this.Memberships=response;
+      console.log(this.Memberships)
+  
+    });
+    
+  }
   
 
   GetAllMemberships(){
     // User data which we have received from the registration form.
-    this.MembershipService.getAllMembership().subscribe((reponse)=>{
+    this.MembershipService.getAllMembership(this.member_id).subscribe((reponse)=>{
       this.Memberships=reponse;
      });
 
     }
 
-    AddMembership(selectedItem: any){
-      this.router.navigate(['/addMembership/' + selectedItem.membership_id]);
+    AddMembership(){
+      this.router.navigate(['/addMembership/' + this.member_id]);
     }
 
     DeleteMembership(selectedItem: any){

@@ -2,24 +2,26 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { map } from "rxjs/operators";
 import { getLocaleDateFormat } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
+import { MembershipComponent } from './membership.component';
+
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class MembershipService {
-  
-
-  baseUrl: string= "http://localhost:3000/membership/:id";
-  baseUrl2: string= "http://localhost:3000/membership/membership";
-
-  constructor(private httpClient : HttpClient) { }
 
 
+  constructor(private httpClient : HttpClient) { 
+  }
 
-  public getAllMembership(){
-    return this.httpClient.get(this.baseUrl2);
+  baseUrl: string= "http://localhost:3000/membership/:id"
 
+  public getAllMembership(obj){
+    return this.httpClient.get(this.baseUrl, obj).pipe(map(data=>
+     data));
   }
 
   public addMembership(obj){

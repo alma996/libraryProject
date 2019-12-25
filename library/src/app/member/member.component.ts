@@ -23,6 +23,7 @@ export class MemberComponent implements OnInit{
 
   Members: any;
   Delete: any;
+  Memberships: any ;
   searchText: any;
   p: number = 1;
 
@@ -62,6 +63,12 @@ export class MemberComponent implements OnInit{
     EditMember(selectedItem: any){
       this.router.navigate(['/editMember/'+ selectedItem.member_id +'/' + selectedItem.first_name +'/' + selectedItem.last_name +'/' + selectedItem.birth_date +'/' + selectedItem.address +'/' + selectedItem.email +'/' + selectedItem.phone_number]);
   
+    }
+
+    Membership(selectedItem: any){
+    
+      this.router.navigate(['/membership/'+ selectedItem.member_id]);
+
     }
   
 
