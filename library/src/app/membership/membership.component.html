@@ -14,8 +14,11 @@
             <th></th>
           </tr>
         </thead>
+        <div *ngIf="Memberships==0">
+          <a [href]="AddMembership()"></a>
+        </div>
         <tbody>
-          <tr *ngFor="let membership of Memberships | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
+          <tr *ngFor="let membership of Memberships | filter: searchText">
             <td>{{membership.member.first_name}}</td>
             <td>{{membership.member.last_name}}</td>
             <td>{{membership.date_of_payment}}</td>
@@ -29,13 +32,9 @@
         </tbody>
       </table>
 
-      <div class="pagination">
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      </div>
+    
     </div>
 
-    <button class="btn" (click)="AddMembership()" class="btn btn-primary">Add Membership</button>&nbsp;&nbsp;
-  </div>
-  
-  
+    <button class="btn btn-primary" (click)="BackToMember()">Back To Member</button>
+</div>
   <router-outlet></router-outlet>

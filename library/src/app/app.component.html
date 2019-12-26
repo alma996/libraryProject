@@ -32,6 +32,9 @@
         <a class="nav-link" routerLink="/publisher">Publisher</a>
       </li>
       <li *ngIf="auth.isLoggedIn()" class="nav-item">
+        <a class="nav-link" routerLink="/book">Book</a>
+      </li>
+      <li *ngIf="auth.isLoggedIn()" class="nav-item">
         <a class="nav-link" routerLink="" (click)="auth.logout()">Logout</a>
       </li>
     </ul>

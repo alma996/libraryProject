@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormGroup, FormControl, FormGroupName } from '@angular/forms';
+import { Validators, FormGroup, FormControl, FormGroupName, FormBuilder } from '@angular/forms';
 //import { RegistrationService } from './registration.service';
 import { MembershipService } from './membership.service';
 import { NgForm } from '@angular/forms';
@@ -27,11 +27,9 @@ export class MembershipComponent implements OnInit{
   searchText: any;
   p: number = 1;
   member_id: any;
-  date_of_payment: any;
   membership_id: any;
 
-
-  constructor(private MembershipService: MembershipService,private route: ActivatedRoute, private router: Router, private http: HttpClient){
+  constructor(private fb: FormBuilder, private MembershipService: MembershipService,private route: ActivatedRoute, private router: Router, private http: HttpClient){
   }
 
 
@@ -41,11 +39,13 @@ export class MembershipComponent implements OnInit{
       this.member_id = params.get('member_id');
     })
 
+  
     this.http.get("http://localhost:3000/membership/"+ this.member_id).subscribe((response) =>{
       this.Memberships=response;
       console.log(this.Memberships)
   
     });
+
     
   }
   
@@ -60,6 +60,10 @@ export class MembershipComponent implements OnInit{
 
     AddMembership(){
       this.router.navigate(['/addMembership/' + this.member_id]);
+    }
+
+    BackToMember(){
+      this.router.navigate(['/member']);
     }
 
     DeleteMembership(selectedItem: any){

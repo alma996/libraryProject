@@ -3,7 +3,7 @@ import { Validators, FormGroup, FormControl, FormGroupName, FormBuilder} from '@
 import { NgForm } from '@angular/forms';
 import { NgModule } from '@angular/compiler/src/core';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { all, allSettled } from 'q';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { map } from "rxjs/operators"; 
@@ -25,9 +25,7 @@ export class AddMembershipComponent {
         return this.registrationForm.get('membership_id')
       }
 
-      get member_id(){
-        return this.registrationForm.get('member_id')
-      }
+      member_id: any;
     
       get date_of_payment(){
         return this.registrationForm.get('date_of_payment')
@@ -41,10 +39,15 @@ export class AddMembershipComponent {
         return this.registrationForm.get('amount')
       }
     
-      constructor(private MembershipService: MembershipService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private MembershipService: MembershipService, private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
 
     ngOnInit(){
+
+      this.route.paramMap.subscribe(params => {
+        this.member_id = params.get('member_id');
+      })
+
         this.registrationForm = this.fb.group({
             membership_id: [''],
             member_id: [''],
@@ -55,9 +58,8 @@ export class AddMembershipComponent {
         }
 
         AddMembership(membershipdata){
-            this.MembershipService.addMembership(membershipdata).subscribe((reponse)=>{
-              console.log(reponse), location.pathname="./membership"
-             });
+          this.http.post("http://localhost:3000/membership/"+ this.member_id, membershipdata).subscribe((response) =>
+            this.router.navigate(['/membership/' + this.member_id]))
           }
     
 }

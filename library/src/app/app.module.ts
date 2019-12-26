@@ -31,6 +31,8 @@ import { AddMembershipComponent } from './membership/addMembership/addMembership
 import { PublisherComponent } from './publisher/publisher.component'
 import { EditPublisherComponent } from './publisher/editPublisher/editPublisher.component'
 import { AddPublisherComponent } from './publisher/addPublisher/addPublisher.component'
+import { BookComponent } from './book/book.component'
+import { AddBookComponent } from './book/addBook/addBook.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -51,6 +53,8 @@ const routes: Routes = [
   { path: 'publisher', component: PublisherComponent },
   { path: 'editPublisher/:publisher_id/:publisher_name', component: EditPublisherComponent },
   { path: 'addPublisher', component: AddPublisherComponent },
+  { path: 'book', component: BookComponent },
+  { path: 'addBook', component: AddBookComponent },
   {
     path: 'profile',
     component: ProfileComponent,
@@ -80,6 +84,8 @@ const routes: Routes = [
     PublisherComponent,
     EditPublisherComponent,
     AddPublisherComponent,
+    BookComponent,
+    AddBookComponent,
   ],
   imports: [
     BrowserModule,

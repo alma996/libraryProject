@@ -45,9 +45,51 @@ book.get('/book', (req, res) => {
       res.send('error: ' + err)
     })
 })
-/*
-Book.post('/:id', (req, res) => {
-    const bookID = req.params.id
+
+book.delete('/:id', (req, res)=>{
+  const bookID = req.params.id
+  Author.hasMany(Book, {foreignKey: 'author_id'})
+    Book.belongsTo(Author, {foreignKey: 'author_id'})
+
+    Genre.hasMany(Book, {foreignKey: 'genre_id'})
+    Book.belongsTo(Genre, {foreignKey: 'genre_id'})
+
+    Publisher.hasMany(Book, {foreignKey: 'publisher_id'})
+    Book.belongsTo(Publisher, {foreignKey: 'publisher_id'})
+
+Book.destroy({
+    where: {
+      book_id: bookID
+      
+    },
+    include: [{
+      model: Author
+  },
+  {
+ model: Genre
+  },
+ {
+     model: Publisher
+ }]
+  })
+  .then(function (deletedRecord) {
+    if(deletedRecord === 1){
+        res.status(200).json({message:"Deleted successfully"});          
+    }
+    else
+    {
+        res.status(404).json({message:"record not found"})
+    }
+})
+.catch(function (error){
+    res.status(500).json(error);
+})
+})
+
+book.post('/:author_id/:genre_id/:publisher_id', (req, res) => {
+  const authorID = req.params.author_id
+  const genreID = req.params.genre_id
+  const publisherID = req.params.publisher_id
     Author.hasMany(Book, {foreignKey: 'author_id'})
     Book.belongsTo(Author, {foreignKey: 'author_id'})
 
@@ -58,29 +100,35 @@ Book.post('/:id', (req, res) => {
     Book.belongsTo(Publisher, {foreignKey: 'publisher_id'})
 
     const BookData = {
-        book_id: bookID,
-      date_of_payment: req.body.date_of_payment,
-      year: req.body.year,
-      amount: req.body.amount,
+      author_id: authorID,
+      genre_id: genreID,
+      publisher_id: publisherID,
+      book_name: req.body.book_name
     }
   
-    Membership.findOne({
+    Book.findOne({
       where: {
-        member_id:memberID,
-        date_of_payment: req.body.date_of_payment,
-        year: req.body.year,
-        amount: req.body.amount,
+        author_id: authorID,
+        genre_id: genreID,
+        publisher_id: publisherID,
+        book_name: req.body.book_name
       },
       include: [{
-        model: Member     
-    }]
+        model: Author
+    },
+    {
+   model: Genre
+    },
+   {
+       model: Publisher
+   }]
     })
       //TODO bcrypt
-      .then(membership => {
-        if (!membership) {
-          Membership.create(membershipData)
-            .then(membership => {
-              let token = jwt.sign(membership.dataValues, process.env.SECRET_KEY, {
+      .then(book => {
+        if (!book) {
+          Book.create(BookData)
+            .then(book => {
+              let token = jwt.sign(book.dataValues, process.env.SECRET_KEY, {
                 expiresIn: 1440
               })
               res.json({ token: token })
@@ -89,7 +137,7 @@ Book.post('/:id', (req, res) => {
               res.send('error: ' + err)
             })
         } else {
-          res.json({ error: 'Membership already exists' })
+          res.json({ error: 'Book already exists' })
         }
       })
       .catch(err => {
@@ -97,32 +145,7 @@ Book.post('/:id', (req, res) => {
       })
   })
 
-  membership.delete('/:id', (req, res)=>{
-    const membershipID = req.params.id
-    Member.hasMany(Membership, {foreignKey: 'member_id'})
-    Membership.belongsTo(Member, {foreignKey: 'member_id'})
-Membership.destroy({
-      where: {
-        membership_id:membershipID
-        
-      },
-      include: [{
-        model: Member     
-    }]
-    })
-    .then(function (deletedRecord) {
-      if(deletedRecord === 1){
-          res.status(200).json({message:"Deleted successfully"});          
-      }
-      else
-      {
-          res.status(404).json({message:"record not found"})
-      }
-  })
-  .catch(function (error){
-      res.status(500).json(error);
-  })
-  })
+  /*
 
   membership.put('/:id', (req, res, next) => {
     Membership.update(

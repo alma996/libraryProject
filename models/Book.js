@@ -20,7 +20,7 @@ module.exports = db.sequelize.define(
         type: Sequelize.INTEGER,
       },
     book_name: {
-      type: Sequelize.DATE
+      type: Sequelize.STRING
     }
     },
   {

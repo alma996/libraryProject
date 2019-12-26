@@ -1,0 +1,37 @@
+<div class="container-md">
+    <div class="row">
+      <div class="search-user">
+        <input type="text" name="search" [(ngModel)]="searchText" placeholder="Search"><pre></pre>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Book</th>
+            <th>Genre</th>
+            <th>Author First Name</th>
+            <th>Author Last Name</th>
+            <th>Publisher</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let book of Books | filter: searchText">
+            <td>{{book.book_name}}</td>
+            <td>{{book.genre.genre_name}}</td>
+            <td>{{book.author.first_name}}</td>
+            <td>{{book.author.last_name}}</td>
+            <td>{{book.publisher.publisher_name}}</td>
+  
+            <button class="btn" (click)="DeleteBook(book)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
+            <button class="btn" (click)="EditBook(book)"><fa-icon [icon]="faUserEdit"></fa-icon></button>
+          </tr>
+  
+        </tbody>
+      </table>
+
+    
+    </div>
+
+    <button class="btn btn-primary" (click)="AddBook()">Add Book</button>
+</div>
+  <router-outlet></router-outlet>
