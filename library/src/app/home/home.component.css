@@ -1,7 +1,15 @@
-.alma{
+
+.full{
        
-        background-size: 100%;
-        height: 800px;
+        
+  background-image: url('../../assets/img/sl1.jpeg');
+  /* Full height */
+  height: 800px;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+       
 
 }
 

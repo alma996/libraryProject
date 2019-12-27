@@ -145,22 +145,44 @@ book.post('/:author_id/:genre_id/:publisher_id', (req, res) => {
       })
   })
 
-  /*
+  
 
-  membership.put('/:id', (req, res, next) => {
-    Membership.update(
-      {date_of_payment: req.body.date_of_payment,
-      year: req.body.year,
-      amount: req.body.amount},
-      {returning: true, where: {membership_id: req.params.id} }
+  book.put('/:id', (req, res, next) => {
+    Author.hasMany(Book, {foreignKey: 'author_id'})
+    Book.belongsTo(Author, {foreignKey: 'author_id'})
+
+    Genre.hasMany(Book, {foreignKey: 'genre_id'})
+    Book.belongsTo(Genre, {foreignKey: 'genre_id'})
+
+    Publisher.hasMany(Book, {foreignKey: 'publisher_id'})
+    Book.belongsTo(Publisher, {foreignKey: 'publisher_id'})
+
+    Book.update(
+      {author_id: req.body.author_id,
+      genre_id: req.body.genre_id,
+      publisher_id: req.body.publisher_id,
+      book_name: req.body.book_name},
+      {returning: true, where: {book_id: req.params.id},
+    
+      include: [{
+        model: Author
+    },
+    {
+   model: Genre
+    },
+   {
+       model: Publisher
+   }]
+
+    }
     )
-    .then(Membership.findByPk(req.params.id))
-    .then(function(updatedMembership) {
-    res.json(updatedMembership)
+    .then(Book.findByPk(req.params.id))
+    .then(function(updatedBook) {
+    res.json(updatedBook)
     })
     .catch(next)
    })
-   */
+  
 
 
 module.exports =  book

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormControl, FormGroupName, FormBuilder } from '@angular/forms';
 //import { RegistrationService } from './registration.service';
-import { BookService } from './book.service';
+import { LoansService } from './loans.service';
 import { NgForm } from '@angular/forms';
 import { NgModule } from '@angular/compiler/src/core';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
@@ -12,22 +12,21 @@ import { map, isEmpty } from "rxjs/operators";
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
-import { empty } from 'rxjs';
 
 @Component({
-  templateUrl: './book.component.html',
-  styleUrls: ['./book.component.css']
+  templateUrl: './loans.component.html',
+  styleUrls: ['./loans.component.css']
 })
-export class BookComponent implements OnInit{
+export class LoansComponent implements OnInit{
   faTrash = faTrash;
   faUserEdit = faUserEdit;
 
-  Books: any;
+  Loans: any;
   Delete: any;
   searchText: any;
   p: number = 1;
 
-  constructor(private fb: FormBuilder, private BookService: BookService,private route: ActivatedRoute, private router: Router, private http: HttpClient){
+  constructor(private fb: FormBuilder, private LoansService: LoansService,private route: ActivatedRoute, private router: Router, private http: HttpClient){
   }
 
 
@@ -35,8 +34,8 @@ export class BookComponent implements OnInit{
 
 
   
-    this.BookService.getAllBook().subscribe((reponse)=>{
-      this.Books=reponse;
+    this.LoansService.getAllLoans().subscribe((reponse)=>{
+      this.Loans=reponse;
 
      });
 
@@ -44,17 +43,17 @@ export class BookComponent implements OnInit{
   }
   
 
-    AddBook(){
-      this.router.navigate(['/addBook']);
+    AddLoans(){
+      this.router.navigate(['/addLoans']);
     }
 
-    DeleteBook(selectedItem: any){
-      this.Delete= selectedItem.book_id;
-     return this.http.delete("http://localhost:3000/book/"+ this.Delete).subscribe(response => console.log(response)), location.reload()
+    DeleteLoans(selectedItem: any){
+      this.Delete= selectedItem.loans_id;
+     return this.http.delete("http://localhost:3000/loans/"+ this.Delete).subscribe(response => console.log(response)), location.reload()
     }
 
-    EditBook(selectedItem: any){
-      this.router.navigate(['/editBook/'+ selectedItem.book_id +'/' + selectedItem.genre_id +'/' + selectedItem.author_id +'/' + selectedItem.publisher_id +'/' + selectedItem.book_name]);
+    EditLoans(selectedItem: any){
+      this.router.navigate(['/editLoans/'+ selectedItem.loans_id +'/' + selectedItem.member_id +'/' + selectedItem.book_id +'/' + selectedItem.publisher_id +'/' + selectedItem.loans_date +'/' + selectedItem.return_status]);
   
     }
   

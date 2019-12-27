@@ -9,7 +9,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { map } from "rxjs/operators"; 
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { faTrash} from '@fortawesome/free-solid-svg-icons';
-import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
+import { faUserEdit, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { BookService } from '../book.service';
 
@@ -19,6 +19,7 @@ import { BookService } from '../book.service';
 })
 export class AddBookComponent {
 
+  faPlusCircle = faPlusCircle;
     registrationForm: FormGroup;
     Books: any;
     Genres: any;
@@ -73,6 +74,18 @@ export class AddBookComponent {
           console.log(this.registrationForm.value.author_id.value)
           this.http.post("http://localhost:3000/book/"+ this.registrationForm.value.author_id + '/' + this.registrationForm.value.genre_id + '/' + this.registrationForm.value.publisher_id, membershipdata).subscribe((response) =>
             console.log(response))
+          }
+
+          AddGenre(){
+            this.router.navigate(['/addGenre']);
+          }
+
+          AddAuthor(){
+            this.router.navigate(['/addAuthor']);
+          }
+
+          AddPublisher(){
+            this.router.navigate(['/addPublisher']);
           }
     
 }

@@ -33,6 +33,10 @@ import { EditPublisherComponent } from './publisher/editPublisher/editPublisher.
 import { AddPublisherComponent } from './publisher/addPublisher/addPublisher.component'
 import { BookComponent } from './book/book.component'
 import { AddBookComponent } from './book/addBook/addBook.component'
+import { EditBookComponent } from './book/editBook/editBook.component'
+import { LoansComponent } from './loans/loans.component'
+import { AddLoansComponent } from './loans/addLoans/addLoans.component'
+import { DamageComponent } from './damage/damage.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -55,6 +59,10 @@ const routes: Routes = [
   { path: 'addPublisher', component: AddPublisherComponent },
   { path: 'book', component: BookComponent },
   { path: 'addBook', component: AddBookComponent },
+  { path: 'editBook/:book_id/:genre_id/:author_id/:pblisher_id/:book_name', component: EditBookComponent },
+  { path: 'loans', component: LoansComponent },
+  { path: 'addLoans', component: AddLoansComponent },
+  { path: 'damage', component: DamageComponent },
   {
     path: 'profile',
     component: ProfileComponent,
@@ -86,6 +94,10 @@ const routes: Routes = [
     AddPublisherComponent,
     BookComponent,
     AddBookComponent,
+    EditBookComponent,
+    LoansComponent,
+    AddLoansComponent,
+    DamageComponent
   ],
   imports: [
     BrowserModule,

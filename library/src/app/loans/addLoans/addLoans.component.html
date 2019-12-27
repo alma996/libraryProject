@@ -1,0 +1,66 @@
+<div class="container-md">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <h2>Add new Loans</h2>
+    <form [formGroup]="registrationForm" (ngSubmit)="AddLoans(registrationForm.value)">
+  <div class="form container-md">
+
+    <div class="form-group">
+      <label>Return Status</label>
+      <select class="form-control" formControlName="return_status">
+        <option value="" disabled selected>Select your option</option>
+      <option value="Indebted">Indebted</option>
+      <option value="Returned">Returned</option>
+    </select>
+    </div>
+
+      <div class="form-group">
+        <label>Loans Date</label>
+        <input [class.is-invalid]="loans_date.invalid
+          && loans_date.touched" type="date" class="form-control" formControlName="loans_date" ngModel>
+  
+        <div *ngIf="loans_date.invalid && loans_date.touched">
+          <small *ngIf="loans_date.errors ?.required" class="text-danger">Loans Date is required</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Member</label>
+        <button class="btn" (click)="AddMember()"><fa-icon [icon]="faPlusCircle"></fa-icon></button>
+        <select class="form-control" formControlName="member_id">
+          <option value="" disabled selected>Select your option</option>
+        <option *ngFor="let member of Members" [value]=member.member_id>
+        {{member.first_name}} {{member.last_name}}
+        </option>
+      </select>
+      </div>
+
+
+      <div class="form-group">
+        <label>Book</label>
+        <button class="btn" (click)="AddBook()"><fa-icon [icon]="faPlusCircle"></fa-icon></button>
+        <select class="form-control" formControlName="book_id" ngModel>
+          <option value="" disabled selected>Select your option</option>
+        <option *ngFor="let book of Books" [value]=book.book_id>
+          {{book.book_name}}
+        </option>
+      </select>
+      </div>
+  
+     
+      <div style="text-align: center;">
+      <button class="btn btn-primary" type="submit">Add Book</button>&nbsp;&nbsp;
+    </div>
+    </div>
+  
+  
+  
+  
+  
+    
+    </form>
+  
+   
+  </div>
+  
+  
+  <router-outlet></router-outlet>

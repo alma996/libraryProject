@@ -35,6 +35,12 @@
         <a class="nav-link" routerLink="/book">Book</a>
       </li>
       <li *ngIf="auth.isLoggedIn()" class="nav-item">
+        <a class="nav-link" routerLink="/loans">Loans</a>
+      </li>
+      <li *ngIf="auth.isLoggedIn()" class="nav-item">
+        <a class="nav-link" routerLink="/damage">Damage</a>
+      </li>
+      <li *ngIf="auth.isLoggedIn()" class="nav-item">
         <a class="nav-link" routerLink="" (click)="auth.logout()">Logout</a>
       </li>
     </ul>
