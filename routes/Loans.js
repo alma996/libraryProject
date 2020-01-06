@@ -140,8 +140,8 @@ loans.post('/:member_id/:book_id', (req, res) => {
     Loans.belongsTo(Book, {foreignKey: 'book_id'})
 
     Loans.update(
-      {member_id: req.body.author_id,
-      book_id: req.body.genre_id,
+      {member_id: req.body.member_id,
+      book_id: req.body.book_id,
       loans_date: req.body.loans_date,
     return_status: req.body.return_status},
       {returning: true, where: {loans_id: req.params.id},

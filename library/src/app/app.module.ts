@@ -37,6 +37,7 @@ import { EditBookComponent } from './book/editBook/editBook.component'
 import { LoansComponent } from './loans/loans.component'
 import { AddLoansComponent } from './loans/addLoans/addLoans.component'
 import { DamageComponent } from './damage/damage.component'
+import { EditLoansComponent } from './loans/editLoans/editLoans.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -62,6 +63,7 @@ const routes: Routes = [
   { path: 'editBook/:book_id/:genre_id/:author_id/:pblisher_id/:book_name', component: EditBookComponent },
   { path: 'loans', component: LoansComponent },
   { path: 'addLoans', component: AddLoansComponent },
+  { path: 'editLoans/:loans_id/:member_id/:book_id/:loans_date/:return_status', component: EditLoansComponent },
   { path: 'damage', component: DamageComponent },
   {
     path: 'profile',
@@ -97,6 +99,7 @@ const routes: Routes = [
     EditBookComponent,
     LoansComponent,
     AddLoansComponent,
+    EditLoansComponent,
     DamageComponent
   ],
   imports: [

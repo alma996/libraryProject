@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const Loans = require('../models/Loans')
 const Damage = require('../models/Damage')
 const Member = require('../models/Member')
+const Book = require('../models/Book')
 
 
 damage.use(cors())
@@ -17,13 +18,19 @@ damage.get('/damage', (req, res) => {
     Loans.hasMany(Damage, {foreignKey: 'loans_id'})
     Damage.belongsTo(Loans, {foreignKey: 'loans_id'})
 
+    Member.hasMany(Loans, {foreignKey: 'member_id'})
+    Loans.belongsTo(Member, {foreignKey: 'member_id'})
 
+    Book.hasMany(Loans, {foreignKey: 'book_id'})
+    Loans.belongsTo(Book, {foreignKey: 'book_id'})
 
  Damage.findAll({
      include: [{
          model: Loans,
-     },
-     
+         required: true,
+         include: [{model: Member, required: true}, {model: Book, required: true}],
+
+     }   
      ]
     })
     .then(damage => {
