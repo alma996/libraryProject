@@ -1,0 +1,27 @@
+<div class="container-fluid">
+    <h2>Edit Membership</h2>
+    <form [formGroup]="registrationForm">
+  
+        <div class="form container-md col-6">
+            <div class="form-group">
+                <input type="hidden" class="form-control" formControlName="damage_id" [(ngModel)]="damage_id">
+                </div>
+
+        <div class="form-group">
+            <input type="hidden" class="form-control" formControlName="loans_id" [(ngModel)]="loans_id">
+            </div>
+
+      <div class="form-group">
+        <label>Dmage description</label>
+        <input type="text" class="form-control" formControlName="damage_description" [(ngModel)]="damage_description">
+        </div>
+
+
+  <div style="text-align: center;">
+      <button class="btn btn-primary" type="submit" (click)="EditDamage(registrationForm.value)" >Edit Damage</button>&nbsp;&nbsp;
+    </div>
+    </div>
+    </form>
+  
+  </div>
+  <router-outlet></router-outlet>

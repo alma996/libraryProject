@@ -54,7 +54,7 @@ export class BookComponent implements OnInit{
     }
 
     EditBook(selectedItem: any){
-      this.router.navigate(['/editBook/'+ selectedItem.book_id +'/' + selectedItem.genre_id +'/' + selectedItem.author_id +'/' + selectedItem.publisher_id +'/' + selectedItem.book_name]);
+      this.router.navigate(['/editBook/'+ selectedItem.book_id +'/' + selectedItem.genre.genre_name +'/' + selectedItem.author.first_name + ' ' + selectedItem.author.last_name +'/' + selectedItem.publisher.publisher_name +'/' + selectedItem.book_name]);
   
     }
   

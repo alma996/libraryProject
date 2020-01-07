@@ -25,6 +25,7 @@ export class DamageComponent implements OnInit{
   Delete: any;
   searchText: any;
   p: number = 1;
+  loans_id: any;
 
   constructor(private fb: FormBuilder, private DamageService: DamageService,private route: ActivatedRoute, private router: Router, private http: HttpClient){
   }
@@ -34,17 +35,21 @@ export class DamageComponent implements OnInit{
 
 
   
-    this.DamageService.getAllDamage().subscribe((reponse)=>{
-      this.Damages=reponse;
-console.log(this.Damages)
-     });
+    this.route.paramMap.subscribe(params => {
+      this.loans_id = params.get('loans_id');
+    })
 
+  
+    this.http.get("http://localhost:3000/damage/"+ this.loans_id).subscribe((response) =>{
+      this.Damages=response;
+  
+    });
     
   }
   
 
     AddDamage(){
-      this.router.navigate(['/addDamge']);
+      this.router.navigate(['/addDamage/' + this.loans_id]);
     }
 
     DeleteDamage(selectedItem: any){
@@ -53,8 +58,13 @@ console.log(this.Damages)
     }
 
     EditDamage(selectedItem: any){
-      this.router.navigate(['/editLoans/'+ selectedItem.loans_id +'/' + selectedItem.member_id +'/' + selectedItem.book_id +'/' + selectedItem.publisher_id +'/' + selectedItem.loans_date +'/' + selectedItem.return_status]);
+      this.router.navigate(['/editDamage/'+ selectedItem.damage_id +'/' + selectedItem.loans_id +'/' + selectedItem.damage_description]);
   
+    }
+
+
+    Back(){
+      this.router.navigate(['/loans']);
     }
   
 

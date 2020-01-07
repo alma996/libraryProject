@@ -21,9 +21,10 @@
             <td>{{book.author.first_name}}</td>
             <td>{{book.author.last_name}}</td>
             <td>{{book.publisher.publisher_name}}</td>
-  
+  <td>
             <button class="btn" (click)="DeleteBook(book)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
             <button class="btn" (click)="EditBook(book)"><fa-icon [icon]="faUserEdit"></fa-icon></button>
+            </td>
           </tr>
   
         </tbody>

@@ -15,6 +15,9 @@
             <th></th>
           </tr>
         </thead>
+        <div *ngIf="Damages==0">
+          <a [href]="AddDamage()"></a>
+        </div>
         <tbody>
           <tr *ngFor="let damage of Damages | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
             <td>{{damage.damage_description}}</td>
@@ -23,7 +26,6 @@
             <td>{{damage.loan.member.first_name}}</td>
             <td>{{damage.loan.member.last_name}}</td>
             <td>{{damage.loan.book.book_name}}</td>
-            <td (click)="Damage(loan)"><fa-icon [icon]="faUserEdit"></fa-icon></td>
   
             <div class="end">
             <button class="btn" (click)="DeleteDamage(damage)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
@@ -39,6 +41,6 @@
         </div>
       </div>
 
-    <button class="btn btn-primary" (click)="AddLoans()">Add Loans</button>
+    <button class="btn btn-primary" (click)="Back()">Back</button>
 </div>
   <router-outlet></router-outlet>

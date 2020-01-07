@@ -24,9 +24,10 @@
             <td>{{membership.date_of_payment}}</td>
             <td>{{membership.year}}</td>
             <td>{{membership.amount}}</td>
-  
+  <td>
             <button class="btn" (click)="DeleteMembership(membership)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
             <button class="btn" (click)="EditMembership(membership)"><fa-icon [icon]="faUserEdit"></fa-icon></button>
+            </td>
           </tr>
   
         </tbody>

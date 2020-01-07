@@ -12,6 +12,7 @@ import { map, isEmpty } from "rxjs/operators";
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
+import { BookComponent } from '../book/book.component';
 
 @Component({
   templateUrl: './loans.component.html',
@@ -53,12 +54,15 @@ export class LoansComponent implements OnInit{
     }
 
     EditLoans(selectedItem: any){
-      this.router.navigate(['/editLoans/'+ selectedItem.loans_id +'/' + selectedItem.member_id +'/' + selectedItem.book_id +'/' + selectedItem.loans_date +'/' + selectedItem.return_status]);
-  
+      this.router.navigate(['/editLoans/'+ selectedItem.loans_id +'/' + selectedItem.member.first_name + ' ' + selectedItem.member.last_name +'/' + selectedItem.book.book_name +'/' + selectedItem.loans_date +'/' + selectedItem.return_status]);
     }
   
 
+    Damage(selectedItem: any){
+    
+      this.router.navigate(['/damage/'+ selectedItem.loans_id]);
 
+    }
 
 
 }

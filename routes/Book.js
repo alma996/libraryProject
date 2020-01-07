@@ -158,9 +158,9 @@ book.post('/:author_id/:genre_id/:publisher_id', (req, res) => {
     Book.belongsTo(Publisher, {foreignKey: 'publisher_id'})
 
     Book.update(
-      {author_id: req.body.author_id,
-      genre_id: req.body.genre_id,
-      publisher_id: req.body.publisher_id,
+      {author_id: req.body.author_name,
+      genre_id: req.body.genre_name,
+      publisher_id: req.body.publisher_name,
       book_name: req.body.book_name},
       {returning: true, where: {book_id: req.params.id},
     

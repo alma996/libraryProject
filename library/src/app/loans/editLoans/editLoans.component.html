@@ -1,6 +1,6 @@
 <div class="container-md">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <h2>Add new Book</h2>
+  <h2>Add new Loans</h2>
   <form [formGroup]="registrationForm" (ngSubmit)="EditLoans(registrationForm.value)">
 <div class="form container-md">
 
@@ -31,7 +31,8 @@
     <div class="form-group">
       <label>Member</label>
       <button class="btn btn1" (click)="AddMember()"><fa-icon [icon]="faPlusCircle"></fa-icon></button>
-      <select class="form-control" formControlName="member_name">
+      <select class="form-control" formControlName="member_name" [(ngModel)]="member_name">
+        <option>{{member_name}}</option>
       <option *ngFor="let member of Members" [value]=member.member_id>
       {{member.first_name}} {{member.last_name}}
       </option>
@@ -42,8 +43,8 @@
     <div class="form-group">
       <label>Book</label>
       <button class="btn" (click)="AddBook()"><fa-icon [icon]="faPlusCircle"></fa-icon></button>
-      <select class="form-control">
-        <option value="" disabled selected>Select your option</option>
+      <select class="form-control" formControlName="book_name" [(ngModel)]="book_name">
+        <option>{{book_name}}</option>
       <option *ngFor="let book of Books" [value]=book.book_id>
         {{book.book_name}}
       </option>

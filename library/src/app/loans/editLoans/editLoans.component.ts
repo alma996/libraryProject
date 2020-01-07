@@ -29,7 +29,8 @@ export class EditLoansComponent {
     return_status: string;
     loans_date: any;
     member_name: string;
-    book_name: any;
+    member_name2: string;
+    book_name: string;
 
     Books: any;
     Members: any;
@@ -46,9 +47,9 @@ export class EditLoansComponent {
           this.loans_id = params.get('loans_id')
             this.return_status = params.get('return_status');
             this.loans_date = params.get('loans_date');
-            this.member_name = params.get('first_name');
-            this.book_name = params.get('book_name')
-            console.log(this.book_name)
+            this.member_name = params.get('first_name')
+            this.member_name2 = params.get('last_name')
+            this.book_name = params.get('book_id')
           })
 
           this.LoansService.getAllBook().subscribe((reponse)=>{
@@ -71,7 +72,8 @@ export class EditLoansComponent {
           return_status: [''],
           loans_date: [''],
           member_name: [''],
-          book_name: ['']
+          member_name2: [''],
+          book_name: [''],
           })
         }
 
@@ -90,6 +92,7 @@ export class EditLoansComponent {
           this.loans_date = this.registrationForm.value.loans_date,
           this.member_name = this.registrationForm.value.member_name,
           this.book_name = this.registrationForm.value.book_name,
+          
 
             this.EditLoans= selectedItem.loans_id;
            return this.http.put("http://localhost:3000/loans/" + this.loans_id, selectedItem).subscribe(response => console.log(response))

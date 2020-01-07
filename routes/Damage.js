@@ -14,7 +14,7 @@ damage.use(cors())
 process.env.SECRET_KEY = 'secret'
 
 
-damage.get('/damage', (req, res) => {
+damage.get('/:id', (req, res) => {
     Loans.hasMany(Damage, {foreignKey: 'loans_id'})
     Damage.belongsTo(Loans, {foreignKey: 'loans_id'})
 
@@ -25,6 +25,7 @@ damage.get('/damage', (req, res) => {
     Loans.belongsTo(Book, {foreignKey: 'book_id'})
 
  Damage.findAll({
+  where: {loans_id: req.params.id},
      include: [{
          model: Loans,
          required: true,
@@ -44,6 +45,7 @@ damage.get('/damage', (req, res) => {
       res.send('error: ' + err)
     })
 })
+
 
 damage.delete('/:id', (req, res)=>{
   const damageID = req.params.id
@@ -73,33 +75,29 @@ Damage.destroy({
     res.status(500).json(error);
 })
 })
-
-damage.post('/:loans_id', (req, res) => {
-  const loansID = req.params.loans_id
  
-
-  Loans.hasMany(Damage, {foreignKey: 'loans_id'})
-  Damage.belongsTo(Loans, {foreignKey: 'loans_id'})
-
-
-    const LoansData = {
-      loans_id: loansID,
+  damage.post('/:id', (req, res) => {
+    const loansID = req.params.id
+    Loans.hasMany(Damage, {foreignKey: 'loans_id'})
+    Damage.belongsTo(Loans, {foreignKey: 'loans_id'})
+    const damageData = {
+        loans_id: loansID,
       damage_description: req.body.damage_description,
     }
   
     Damage.findOne({
       where: {
-        loans_id: loansID,
+        loans_id:loansID,
         damage_description: req.body.damage_description,
       },
       include: [{
-        model: Loans
-    },,]
+        model: Loans   
+    }]
     })
       //TODO bcrypt
       .then(damage => {
         if (!damage) {
-          Damage.create(DamageData)
+          Damage.create(damageData)
             .then(damage => {
               let token = jwt.sign(damage.dataValues, process.env.SECRET_KEY, {
                 expiresIn: 1440
@@ -125,7 +123,7 @@ damage.post('/:loans_id', (req, res) => {
     Damage.belongsTo(Loans, {foreignKey: 'loans_id'})
 
 
-    Loans.update(
+    Damage.update(
       {loans_id: req.body.loans_id,
       damage_description: req.body.damage_description},
       {returning: true, where: {damage_id: req.params.id},

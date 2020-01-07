@@ -42,10 +42,10 @@ export class EditBookComponent {
     ngOnInit(){
 
         this.route.paramMap.subscribe(params => {
-            this.book_id = params.get('genre_id');
-            this.author_name = params.get('author_name');
-            this.genre_name = params.get('genre_name');
-            this.publisher_name = params.get('publisher_name')
+            this.book_id = params.get('book_id');
+            this.author_name = params.get('author_id');
+            this.genre_name = params.get('genre_id');
+            this.publisher_name = params.get('publisher_id')
             this.book_name = params.get('book_name')
           })
 
@@ -66,9 +66,9 @@ export class EditBookComponent {
 
         this.registrationForm = this.fb.group({
           book_id: [''],
-          author_id: [''],
-          genre_id: [''],
-          publisher_id: [''],
+          author_name: [''],
+          genre_name: [''],
+          publisher_name: [''],
           book_name: [''],
           })
         }
@@ -76,9 +76,9 @@ export class EditBookComponent {
         EditBook(selectedItem: any){
 
           this.book_id = this.registrationForm.value.book_id,
-          this.author_name = this.registrationForm.value.author_id,
-          this.genre_name = this.registrationForm.value.genre_id,
-          this.publisher_name = this.registrationForm.value.publisher_id,
+          this.author_name = this.registrationForm.value.author_name,
+          this.genre_name = this.registrationForm.value.genre_name,
+          this.publisher_name = this.registrationForm.value.publisher_name,
           this.book_name = this.registrationForm.value.book_name,
 
             this.EditBook= selectedItem.book_id;

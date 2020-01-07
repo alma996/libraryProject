@@ -20,14 +20,15 @@
             <td>{{loan.member.first_name}}</td>
             <td>{{loan.member.last_name}}</td>
             <td>{{loan.book.book_name}}</td>
-            <td>{{loan.loans_date}}</td>
+            <td>{{loan.loans_date  | date:'dd.MM.yyyy'}}</td>
             <td>{{loan.return_status}}</td>
             <td (click)="Damage(loan)"><fa-icon [icon]="faUserEdit"></fa-icon></td>
-  
+
             <div class="end">
-            <button class="btn" (click)="DeleteLoans(loan)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
-            <button class="btn" (click)="EditLoans(loan)"><fa-icon [icon]="faUserEdit"></fa-icon></button>
-            </div>
+              <button class="btn" (click)="DeleteLoans(loan)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
+              <button class="btn" (click)="EditLoans(loan)"><fa-icon [icon]="faUserEdit"></fa-icon></button>
+              </div>
+  
           </tr>
   
         </tbody>
