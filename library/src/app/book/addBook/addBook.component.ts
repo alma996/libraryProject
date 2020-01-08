@@ -5,13 +5,17 @@ import { NgModule } from '@angular/compiler/src/core';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 import { Router, ActivatedRoute } from '@angular/router';
 import { all, allSettled } from 'q';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { map } from "rxjs/operators"; 
+import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { map, isEmpty, subscribeOn } from "rxjs/operators"; 
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { BookService } from '../book.service';
+import { ToastrService } from 'ngx-toastr';
+import {Location} from '@angular/common';
+import { error } from 'util';
+import { NOTFOUND } from 'dns';
 
 @Component({
   templateUrl: './addBook.component.html',
@@ -43,8 +47,17 @@ export class AddBookComponent {
         return this.registrationForm.get('publisher_id')
       }
     
-      constructor(private BookService: BookService, private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private http: HttpClient){
-    }
+      constructor(private BookService: BookService, private _location: Location, private toastr: ToastrService, private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      }
+
+      showSuccess(any){
+        this.toastr.success(this.registrationForm.value.book_name + ' ' + 'book successfully added', 'Successfully');
+        console.log(this.registrationForm.value.book_name)
+      }
+    
+      errorSuccess(){
+        this.toastr.error('Please fill in the blank fields', 'Error');
+      }
 
     ngOnInit(){
 
@@ -71,10 +84,11 @@ export class AddBookComponent {
         })
         }
         AddBook(membershipdata){
-          console.log(this.registrationForm.value.author_id.value)
           this.http.post("http://localhost:3000/book/"+ this.registrationForm.value.author_id + '/' + this.registrationForm.value.genre_id + '/' + this.registrationForm.value.publisher_id, membershipdata).subscribe((response) =>
-            console.log(response))
+          {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()}, );
+         
           }
+      
 
           AddGenre(){
             this.router.navigate(['/addGenre']);
@@ -87,5 +101,7 @@ export class AddBookComponent {
           AddPublisher(){
             this.router.navigate(['/addPublisher']);
           }
+
+          
     
 }

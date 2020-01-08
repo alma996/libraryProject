@@ -12,6 +12,7 @@ import { map, isEmpty } from "rxjs/operators";
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
+import { faSearch} from '@fortawesome/free-solid-svg-icons';
 import { empty } from 'rxjs';
 
 @Component({
@@ -21,6 +22,7 @@ import { empty } from 'rxjs';
 export class BookComponent implements OnInit{
   faTrash = faTrash;
   faUserEdit = faUserEdit;
+  faSearch = faSearch;
 
   Books: any;
   Delete: any;

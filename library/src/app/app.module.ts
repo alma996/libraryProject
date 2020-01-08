@@ -120,11 +120,12 @@ const routes: Routes = [
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 1000,
-      positionClass: 'toast-bottom-right'
+      positionClass: 'toast-top-right',
+      preventDuplicates: false,
     }),
     RouterModule.forRoot(routes)
   ],
   providers: [AuthenticationService, AuthGuardService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

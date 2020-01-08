@@ -21,7 +21,6 @@ import { empty } from 'rxjs';
 export class MembershipComponent implements OnInit{
   faTrash = faTrash;
   faUserEdit = faUserEdit;
-
   Memberships: any;
   Delete: any;
   searchText: any;
