@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { AuthenticationService, TokenPayload } from '../authentication.service'
 import { Router } from '@angular/router'
 import {ToastrService} from 'ngx-toastr'
+import { FormGroup, FormBuilder } from '@angular/forms'
 
 @Component({
     templateUrl:'./login.component.html'
@@ -15,7 +16,7 @@ import {ToastrService} from 'ngx-toastr'
       password: ''
     }
   
-    constructor(private auth: AuthenticationService, private router: Router, private toastr: ToastrService) {}
+    constructor(private auth: AuthenticationService, private router: Router, private fb: FormBuilder, private toastr: ToastrService) {}
   
     login() {
       this.auth.login(this.credentials).subscribe(

@@ -11,6 +11,7 @@ export class AuthorService {
   
 
   baseUrl: string= "http://localhost:3000/author/author";
+  IdUrl: string= "http://localhost:3000/author/";
 
   constructor(private httpClient : HttpClient) { }
 
@@ -18,6 +19,12 @@ export class AuthorService {
 
   public getAllUsers(){
     return this.httpClient.get(this.baseUrl);
+
+  }
+
+  
+  public getUserById(id){
+    return this.httpClient.get(this.IdUrl+id);
 
   }
 

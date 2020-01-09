@@ -46,6 +46,7 @@ export class AuthorComponent implements OnInit{
   } 
   
 
+
   GetAllUser(){
     // User data which we have received from the registration form.
     this.AuthorService.getAllUsers().subscribe((reponse)=>{
@@ -64,12 +65,12 @@ export class AuthorComponent implements OnInit{
       console.log("Selected item Id: ", selectedItem.author_id);
       this.Delete= selectedItem.author_id;
      return this.http.delete("http://localhost:3000/author/"+ this.Delete).subscribe(response =>
-     {console.log(response),location.reload(),30000, this.showSuccess()},
+     {console.log(response),this.GetAllUser(), this.showSuccess()},
      error =>{this.errorSuccess()}, );
     }
 
     EditAuthor(selectedItem: any){
-      this.router.navigate(['/editAuthor/'+ selectedItem.author_id +'/' + selectedItem.first_name +'/' + selectedItem.last_name]);
+      this.router.navigate(['/editAuthor/'+ selectedItem.author_id]);
       console.log("Selected item id: ", selectedItem.author_id, selectedItem.first_name, selectedItem.last_name);
       //this.Update= selectedItem.EmpID;
      //return this.http.put("http://localhost:3000/employees/" + this.Update, this.Update).subscribe(response => console.log(response));

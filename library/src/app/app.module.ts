@@ -47,7 +47,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'author', component: AuthorComponent },
   { path: 'addAuthor', component: AddAuthorComponent },
-  { path: 'editAuthor/:author_id/:first_name/:last_name', component: EditAuthorComponent },
+  { path: 'editAuthor/:author_id', component: EditAuthorComponent },
   { path: 'genre', component: GenreComponent },
   { path: 'addGenre', component: AddGenreComponent },
   { path: 'editGenre/:genre_id/:genre_name', component: EditGenreComponent },

@@ -14,11 +14,14 @@ import { on } from 'cluster';
 import { AuthorService } from '../author.service';
 import { ToastrService } from 'ngx-toastr'
 import {Location} from '@angular/common';
+import { AuthorModel } from '../AuthorModel'
 
 @Component({
   templateUrl: './editAuthor.component.html',
   styleUrls:['./editAuthor.component.css']
 })
+
+
 export class EditAuthorComponent {
 
     registrationForm: FormGroup;
@@ -28,16 +31,21 @@ export class EditAuthorComponent {
 
     
 
-      constructor(private route: ActivatedRoute,private _location: Location, private toastr: ToastrService, AuthorService: AuthorService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private route: ActivatedRoute,private _location: Location, private toastr: ToastrService, private AuthorService: AuthorService, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
 
     ngOnInit(){
 
+
         this.route.paramMap.subscribe(params => {
             this.author_id = params.get('author_id');
-            this.first_name = params.get('first_name');
-            this.last_name = params.get('last_name');
           })
+
+          this.AuthorService.getUserById(this.author_id).subscribe((reponse: AuthorModel)=>{
+            console.log(reponse);
+            this.first_name = reponse.first_name
+            this.last_name = reponse.last_name
+          });
 
         this.registrationForm = this.fb.group({
           author_id: [''],

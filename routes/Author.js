@@ -26,6 +26,26 @@ author.get('/author', (req, res) => {
     })
 })
 
+author.get('/:author_id', (req, res) => {
+const authorID = req.params.author_id
+  Author.findOne({
+    attributes: ['author_id', 'first_name', 'last_name'],
+    where: {
+      author_id:authorID 
+    }
+  })
+    .then(author => {
+      if (author) {
+        res.json(author)
+      } else {
+        res.send('Author dos not exist')
+      }
+    })
+    .catch(err => {
+      res.send('error: ' + err)
+    })
+})
+
 author.post('/author', (req, res) => {
     const authorData = {
       first_name: req.body.first_name,
