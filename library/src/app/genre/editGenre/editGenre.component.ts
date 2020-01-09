@@ -13,6 +13,7 @@ import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import {ToastrService} from 'ngx-toastr';
 import { GenreService } from '../genre.service';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class EditGenreComponent {
     genre_id: any;
     genre_name: string;
 
-      constructor( private toast: ToastrService,private route: ActivatedRoute, GenreService: GenreService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor( private toastr: ToastrService, private _location: Location, private route: ActivatedRoute, GenreService: GenreService, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
     
 
@@ -49,12 +50,17 @@ export class EditGenreComponent {
           this.genre_name = this.registrationForm.value.genre_name,
       
             this.EditGenre= selectedItem.genre_id;
-           return this.http.put("http://localhost:3000/genre/" + this.genre_id, selectedItem).subscribe(response => console.log(response)), location.pathname="./genre";
+           return this.http.put("http://localhost:3000/genre/" + this.genre_id, selectedItem).subscribe(response =>
+           {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()},);
+          }
+
+          showSuccess(any){
+            this.toastr.success('Genre' + ' ' + this.registrationForm.value.genre_name + ' ' + 'has been successfully edited', 'Successfully');
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Genre not edited, please try again', 'Error')
           }
 
 
-
-          test() {
-            this.toast.success("I'm a toast!", "Success!");
-          }
 }

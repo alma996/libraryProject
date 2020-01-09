@@ -12,6 +12,8 @@ import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { GenreService } from '../genre.service';
+import { ToastrService } from 'ngx-toastr'
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: './addGenre.component.html',
@@ -29,7 +31,7 @@ export class AddGenreComponent {
         return this.registrationForm.get('genre_name')
       }
     
-      constructor(private GenreService: GenreService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private GenreService: GenreService,private toastr: ToastrService, private _location: Location, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
 
     ngOnInit(){
@@ -40,9 +42,21 @@ export class AddGenreComponent {
         }
 
         AddGenre(genredata){
-            this.GenreService.addGenres(genredata).subscribe((reponse)=>{
-              console.log(reponse), location.pathname="./genre"
-             });
+          if(this.registrationForm.value.genre_name !== ''){
+            this.GenreService.addGenres(genredata).subscribe((response)=>
+            {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()}, );
+
+            }else{
+              this.errorSuccess()
+            }
+          }
+
+          showSuccess(any){
+            this.toastr.success('Genre successfully deleted', 'Successfully');
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Genre has not been deleted', 'Error');
           }
     
 }

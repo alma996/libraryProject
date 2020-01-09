@@ -13,7 +13,9 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import { faSearch} from '@fortawesome/free-solid-svg-icons';
-import { empty } from 'rxjs';
+import { faBookMedical } from '@fortawesome/free-solid-svg-icons';
+import { ToastrService } from 'ngx-toastr'
+
 
 @Component({
   templateUrl: './book.component.html',
@@ -23,19 +25,18 @@ export class BookComponent implements OnInit{
   faTrash = faTrash;
   faUserEdit = faUserEdit;
   faSearch = faSearch;
+  faBookMedical = faBookMedical
 
   Books: any;
   Delete: any;
   searchText: any;
   p: number = 1;
 
-  constructor(private fb: FormBuilder, private BookService: BookService,private route: ActivatedRoute, private router: Router, private http: HttpClient){
+  constructor(private fb: FormBuilder, private toastr: ToastrService, private BookService: BookService,private route: ActivatedRoute, private router: Router, private http: HttpClient){
   }
 
 
   ngOnInit(){
-
-
   
     this.BookService.getAllBook().subscribe((reponse)=>{
       this.Books=reponse;
@@ -52,7 +53,9 @@ export class BookComponent implements OnInit{
 
     DeleteBook(selectedItem: any){
       this.Delete= selectedItem.book_id;
-     return this.http.delete("http://localhost:3000/book/"+ this.Delete).subscribe(response => console.log(response)), location.reload()
+     return this.http.delete("http://localhost:3000/book/"+ this.Delete).subscribe(response =>{console.log(response),location.reload(),30000, this.showSuccess()},
+      error =>{this.errorSuccess()}, );
+    
     }
 
     EditBook(selectedItem: any){
@@ -60,7 +63,13 @@ export class BookComponent implements OnInit{
   
     }
   
-
+    showSuccess(){
+      this.toastr.success('Book successfully deleted', 'Successfully');
+    }
+  
+    errorSuccess(){
+      this.toastr.error('The book has not been deleted', 'Error');
+    }
 
 
 

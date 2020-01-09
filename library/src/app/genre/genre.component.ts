@@ -11,7 +11,8 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { map } from "rxjs/operators"; 
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { faTrash} from '@fortawesome/free-solid-svg-icons';
-import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
+import { faUserEdit, faSearch} from '@fortawesome/free-solid-svg-icons';
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   templateUrl: './genre.component.html',
@@ -20,6 +21,7 @@ import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 export class GenreComponent implements OnInit{
   faTrash = faTrash;
   faUserEdit = faUserEdit;
+  faSearch = faSearch
 
   Genres: any;
   Delete: any;
@@ -27,7 +29,7 @@ export class GenreComponent implements OnInit{
   p: number = 1;
 
 
-  constructor(private GenreService: GenreService, private router: Router, private http: HttpClient){
+  constructor(private GenreService: GenreService, private router: Router, private toastr: ToastrService, private http: HttpClient){
   }
 
 
@@ -56,12 +58,22 @@ export class GenreComponent implements OnInit{
 
     DeleteGenre(selectedItem: any){
       this.Delete= selectedItem.genre_id;
-     return this.http.delete("http://localhost:3000/genre/"+ this.Delete).subscribe(response => console.log(response)), location.reload()
+     return this.http.delete("http://localhost:3000/genre/"+ this.Delete).subscribe(response =>
+     {console.log(response),location.reload(),30000, this.showSuccess()},
+     error =>{this.errorSuccess()}, );
     }
 
     EditGenre(selectedItem: any){
       this.router.navigate(['/editGenre/'+ selectedItem.genre_id +'/' + selectedItem.genre_name]);
   
+    }
+
+    showSuccess(){
+      this.toastr.success('Genre successfully deleted', 'Successfully');
+    }
+  
+    errorSuccess(){
+      this.toastr.error('Genre has not been deleted', 'Error');
     }
   
 

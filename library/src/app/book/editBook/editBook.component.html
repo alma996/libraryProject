@@ -1,6 +1,6 @@
 <div class="container-md">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <h2>Add new Book</h2>
+    <h2>{{book_name}}</h2>
     <form [formGroup]="registrationForm" (ngSubmit)="EditBook(registrationForm.value)">
   <div class="form container-md">
 
@@ -20,7 +20,7 @@
 
       <div class="form-group">
         <label>Genre</label>
-        <button class="btn btn1" (click)="AddGenre()"><fa-icon [icon]="faPlusCircle"></fa-icon></button>
+        <button class="btn btn1" (click)="AddGenre()"><fa-icon [icon]="faPlusCircle" title="Add new genre"></fa-icon></button>
         <select class="form-control" formControlName="genre_name" [(ngModel)]="genre_name">
           <option>{{genre_name}}</option>
         <option *ngFor="let genre of Genres" [value]=genre.genre_id>
@@ -32,7 +32,7 @@
 
       <div class="form-group">
         <label>Author</label>
-        <button class="btn" (click)="AddAuthor()"><fa-icon [icon]="faPlusCircle"></fa-icon></button>
+        <button class="btn" (click)="AddAuthor()"><fa-icon [icon]="faPlusCircle" title="Add new author"></fa-icon></button>
         <select class="form-control" formControlName="author_name" [(ngModel)]="author_name">
           <option>{{author_name}}</option>
         <option *ngFor="let author of Authors" [value]=author.author_id>
@@ -43,7 +43,7 @@
       
       <div class="form-group">
         <label>Publisher</label>
-        <button class="btn" (click)="AddPublisher()"><fa-icon [icon]="faPlusCircle"></fa-icon></button>
+        <button class="btn" (click)="AddPublisher()"><fa-icon [icon]="faPlusCircle" title="Add new publisher"></fa-icon></button>
         <select class="form-control" formControlName="publisher_name" [(ngModel)]="publisher_name">
           <option>{{publisher_name}}</option>
         <option *ngFor="let publisher of Publishers"[value]=publisher.publisher_id>
@@ -54,7 +54,7 @@
   
      
       <div style="text-align: center;">
-      <button class="btn btn-primary" type="submit">Add Book</button>&nbsp;&nbsp;
+      <button class="btn btn-primary" type="submit">Edit Book</button>&nbsp;&nbsp;
     </div>
     </div>
   

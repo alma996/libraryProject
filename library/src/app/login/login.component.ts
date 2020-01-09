@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { AuthenticationService, TokenPayload } from '../authentication.service'
 import { Router } from '@angular/router'
+import {ToastrService} from 'ngx-toastr'
 
 @Component({
     templateUrl:'./login.component.html'
@@ -14,16 +15,24 @@ import { Router } from '@angular/router'
       password: ''
     }
   
-    constructor(private auth: AuthenticationService, private router: Router) {}
+    constructor(private auth: AuthenticationService, private router: Router, private toastr: ToastrService) {}
   
     login() {
       this.auth.login(this.credentials).subscribe(
         () => {
-          this.router.navigateByUrl('/profile')
+          this.router.navigateByUrl('/'), this.showSuccess()
         },
         err => {
-          console.error(err)
+          console.error(err), this.errorSuccess()
         }
       )
+    }
+
+    showSuccess(){
+      this.toastr.success('You are logged in', 'Successfully');
+    }
+  
+    errorSuccess(){
+      this.toastr.error('Please check your email or password', 'Error');
     }
   }

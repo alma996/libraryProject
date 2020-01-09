@@ -13,6 +13,7 @@ import { faUserEdit, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import {ToastrService} from 'ngx-toastr';
 import { BookService } from '../book.service';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class EditBookComponent {
     Authors: any;
     Publishers: any;
 
-      constructor( private toast: ToastrService,private route: ActivatedRoute, private BookService: BookService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor( private toastr: ToastrService,private _location: Location, private route: ActivatedRoute, private BookService: BookService, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
     
 
@@ -71,6 +72,7 @@ export class EditBookComponent {
           publisher_name: [''],
           book_name: [''],
           })
+
         }
 
         EditBook(selectedItem: any){
@@ -82,7 +84,16 @@ export class EditBookComponent {
           this.book_name = this.registrationForm.value.book_name,
 
             this.EditBook= selectedItem.book_id;
-           return this.http.put("http://localhost:3000/book/" + this.book_id, selectedItem).subscribe(response => console.log(response))
+           return this.http.put("http://localhost:3000/book/" + this.book_id, selectedItem).subscribe(response =>
+            {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()},);
           }
 
+          showSuccess(any){
+            this.toastr.success('The ' + this.registrationForm.value.book_name + ' ' + 'book has been successfully edited', 'Successfully');
+            console.log(this.registrationForm.value.book_name)
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Book not edited, please try again', 'Error')
+          }
 }

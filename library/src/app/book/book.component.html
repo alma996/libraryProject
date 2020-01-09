@@ -1,7 +1,8 @@
 <div class="container-md">
+  <h1>List of books</h1>
     <div class="row">
 
-    <div class="conainer-md">
+    <div class="search conainer-md">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1"> <fa-icon [icon]="faSearch"></fa-icon>&nbsp;&nbsp;</span>
@@ -22,16 +23,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let book of Books | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
+          <tr class="name" *ngFor="let book of Books | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
             <td>{{book.book_name}}</td>
             <td>{{book.genre.genre_name}}</td>
             <td>{{book.author.first_name}}</td>
             <td>{{book.author.last_name}}</td>
             <td>{{book.publisher.publisher_name}}</td>
-  <td>
-            <button class="btn" (click)="DeleteBook(book)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
-            <button class="btn" (click)="EditBook(book)"><fa-icon [icon]="faUserEdit"></fa-icon></button>
-            </td>
+            
+            
+            <button class="btn" (click)="DeleteBook(book)" title="Delete"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
+            <button class="btn" (click)="EditBook(book)" title="Edit"><fa-icon [icon]="faUserEdit"></fa-icon></button>
+            
           </tr>
   
         </tbody>

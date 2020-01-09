@@ -12,6 +12,8 @@ import { map } from "rxjs/operators";
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   templateUrl: './author.component.html',
@@ -19,6 +21,7 @@ import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 })
 export class AuthorComponent implements OnInit{
   faTrash = faTrash;
+  faSearch = faSearch
   faUserEdit = faUserEdit;
 
   Authors: any;
@@ -27,7 +30,7 @@ export class AuthorComponent implements OnInit{
   p: number = 1;
 
 
-  constructor(private AuthorService: AuthorService, private router: Router, private http: HttpClient){
+  constructor(private AuthorService: AuthorService, private router: Router, private http: HttpClient, private toastr: ToastrService){
   }
 
 
@@ -60,7 +63,9 @@ export class AuthorComponent implements OnInit{
     DeleteAuthor(selectedItem: any){
       console.log("Selected item Id: ", selectedItem.author_id);
       this.Delete= selectedItem.author_id;
-     return this.http.delete("http://localhost:3000/author/"+ this.Delete).subscribe(response => console.log(response));
+     return this.http.delete("http://localhost:3000/author/"+ this.Delete).subscribe(response =>
+     {console.log(response),location.reload(),30000, this.showSuccess()},
+     error =>{this.errorSuccess()}, );
     }
 
     EditAuthor(selectedItem: any){
@@ -69,6 +74,14 @@ export class AuthorComponent implements OnInit{
       //this.Update= selectedItem.EmpID;
      //return this.http.put("http://localhost:3000/employees/" + this.Update, this.Update).subscribe(response => console.log(response));
   
+    }
+
+    showSuccess(){
+      this.toastr.success('Author successfully deleted', 'Successfully');
+    }
+  
+    errorSuccess(){
+      this.toastr.error('Author has not been deleted', 'Error');
     }
   
 

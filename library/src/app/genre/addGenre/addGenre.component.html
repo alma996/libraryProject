@@ -6,7 +6,7 @@
       <div class="form-group">
         <label>Genre Name</label>
         <input [class.is-invalid]="genre_name.invalid
-          && genre_name.touched" type="text" class="form-control" formControlName="genre_name" ngModel>
+          && genre_name.touched" type="text" class="form-control" formControlName="genre_name" ngModel required>
   
         <div *ngIf="genre_name.invalid && genre_name.touched">
           <small *ngIf="genre_name.errors ?.required" class="text-danger">Genre Name is required</small>

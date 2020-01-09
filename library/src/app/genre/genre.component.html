@@ -1,24 +1,32 @@
 <div class="container-md">
+  <h1>List of genres</h1>
     <div class="row">
-      <div class="search-user">
-        <input type="text" name="search" [(ngModel)]="searchText" placeholder="Search"><pre></pre>
+
+      <div class="search conainer-md">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"> <fa-icon [icon]="faSearch"></fa-icon>&nbsp;&nbsp;</span>
+          </div>
+          <input type="text" name="search" [(ngModel)]="searchText" class="form-control" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1"><pre></pre>
+        </div>
       </div>
+
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Id</th>
             <th>Genre Name</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let genre of Genres | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
-            <td>{{genre.genre_id}}</td>
             <td>{{genre.genre_name}}</td>
+<td>
   <div class="end">
-            <button class="btn" (click)="DeleteGenre(genre)"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
-            <button class="btn" (click)="EditGenre(genre)"><fa-icon [icon]="faUserEdit"></fa-icon></button>
-          </div>
+            <button class="btn" (click)="DeleteGenre(genre)" title="Delete"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
+            <button class="btn" (click)="EditGenre(genre)" title="Edit"><fa-icon [icon]="faUserEdit"></fa-icon></button>
+            </div>
+</td>
           </tr>
   
         </tbody>

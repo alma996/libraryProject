@@ -1,8 +1,7 @@
 
 
-.search-user{
- padding: 20px;
-
+.search{
+ text-align: end;
 }
 
 .pagination{
@@ -11,4 +10,17 @@
 
 .input-group{
     padding: 20px;
+}
+
+h1{
+    text-align: center;
+    padding: 20px;
+}
+
+.name{
+    text-transform: capitalize;
+}
+
+.end{
+    text-align: end;
 }

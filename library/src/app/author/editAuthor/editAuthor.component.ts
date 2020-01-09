@@ -12,6 +12,8 @@ import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { AuthorService } from '../author.service';
+import { ToastrService } from 'ngx-toastr'
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: './editAuthor.component.html',
@@ -26,7 +28,7 @@ export class EditAuthorComponent {
 
     
 
-      constructor(private route: ActivatedRoute, AuthorService: AuthorService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private route: ActivatedRoute,private _location: Location, private toastr: ToastrService, AuthorService: AuthorService, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
 
     ngOnInit(){
@@ -52,12 +54,17 @@ export class EditAuthorComponent {
       
 
             this.EditAuthor= selectedItem.author_id;
-           return this.http.put("http://localhost:3000/author/" + this.author_id, selectedItem).subscribe(response => console.log(response));
+           return this.http.put("http://localhost:3000/author/" + this.author_id, selectedItem).subscribe(response =>
+           {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()},);
           }
 
-          Home(){
-            this.router.navigate(['/author']);
 
+          showSuccess(any){
+            this.toastr.success('Author' + ' ' + this.registrationForm.value.first_name + ' ' + this.registrationForm.value.last_name + ' ' + 'has been successfully edited', 'Successfully');
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Author not edited, please try again', 'Error')
           }
 
     

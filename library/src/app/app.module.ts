@@ -119,9 +119,10 @@ const routes: Routes = [
     NgxPaginationModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 1000,
+      timeOut: 2000,
       positionClass: 'toast-top-right',
       preventDuplicates: false,
+
     }),
     RouterModule.forRoot(routes)
   ],

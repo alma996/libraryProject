@@ -12,6 +12,8 @@ import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { AuthorService } from '../author.service';
+import { ToastrService } from 'ngx-toastr'
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: './addAuthor.component.html',
@@ -33,7 +35,7 @@ export class AddAuthorComponent {
         return this.registrationForm.get('last_name')
       }
 
-      constructor(private AuthorService: AuthorService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private AuthorService: AuthorService, private fb: FormBuilder, private _location: Location, private toastr: ToastrService, private router: Router, private http: HttpClient){
     }
 
     ngOnInit(){
@@ -45,9 +47,20 @@ export class AddAuthorComponent {
         }
 
         AddAuthor(authordata){
-            this.AuthorService.addAuthors(authordata).subscribe((reponse)=>{
-              console.log(reponse);
-             });
+          if(this.registrationForm.value.first_name !== '', this.registrationForm.value.last_name !== ''){
+            this.AuthorService.addAuthors(authordata).subscribe((response)=>
+            {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()}, );
+          }else{
+            this.errorSuccess();
+          }
+          }
+
+          showSuccess(any){
+            this.toastr.success('Author' + ' ' + this.registrationForm.value.first_name + ' ' + this.registrationForm.value.last_name + ' ' + 'successfully added', 'Successfully');
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Please fill the required fields', 'Error');
           }
     
 }
