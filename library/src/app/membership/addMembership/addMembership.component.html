@@ -6,7 +6,7 @@
       <div class="form-group">
         <label>Date of payment</label>
         <input [class.is-invalid]="date_of_payment.invalid
-          && date_of_payment.touched" type="date" class="form-control" formControlName="date_of_payment" ngModel>
+          && date_of_payment.touched" type="date" class="form-control" formControlName="date_of_payment" ngModel required>
   
         <div *ngIf="date_of_payment.invalid && date_of_payment.touched">
           <small *ngIf="date_of_payment.errors ?.required" class="text-danger">Date of payment is required</small>
@@ -16,7 +16,7 @@
       <div class="form-group">
         <label>Year</label>
         <input [class.is-invalid]="year.invalid
-          && year.touched" type="year" class="form-control" formControlName="year" ngModel>
+          && year.touched" type="number" class="form-control" formControlName="year" ngModel="2020" required>
   
         <div *ngIf="year.invalid && year.touched">
           <small *ngIf="year.errors ?.required" class="text-danger">Year is required</small>
@@ -26,7 +26,7 @@
       <div class="form-group">
         <label>Amount</label>
         <input [class.is-invalid]="amount.invalid
-          && amount.touched" type="number" class="form-control" formControlName="amount" ngModel>
+          && amount.touched" type="number" class="form-control" formControlName="amount" ngModel required>
   
         <div *ngIf="amount.invalid && amount.touched">
           <small *ngIf="amount.errors ?.required" class="text-danger">Amount is required</small>

@@ -12,6 +12,9 @@ import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { MemberService } from '../member.service'
+import { MemberModel } from '../MemberModel'
+import { ToastrService } from 'ngx-toastr';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -30,20 +33,24 @@ export class EditMemberComponent {
     email: string;
     phone_number: any;
 
-      constructor(private route: ActivatedRoute, MemberService: MemberService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private route: ActivatedRoute, private MemberService: MemberService,private _location: Location, private toastr: ToastrService, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
     
 
     ngOnInit(){
         this.route.paramMap.subscribe(params => {
             this.member_id = params.get('member_id');
-            this.first_name = params.get('first_name');
-            this.last_name = params.get('last_name');
-            this.birth_date= params.get('birth_date');
-            this.address = params.get('address');
-            this.email = params.get('email');
-            this.phone_number = params.get('phone_number');
           })
+
+          this.MemberService.getMemberById(this.member_id).subscribe((response: MemberModel)=>{
+            console.log(response);
+            this.first_name = response.first_name
+            this.last_name = response.last_name
+            this.birth_date = response.birth_date
+            this.address = response.address
+            this.email = response.email
+            this.phone_number = response.phone_number
+          });
 
         this.registrationForm = this.fb.group({
           member_id: [''],
@@ -56,7 +63,7 @@ export class EditMemberComponent {
           })
         }
 
-        EditMember(selectedItem: any){
+        EditMember(selectedItem: true){
 
             this.member_id = this.registrationForm.value.member_id,
           this.first_name = this.registrationForm.value.first_name,
@@ -64,10 +71,22 @@ export class EditMemberComponent {
           this.birth_date = this.registrationForm.value.birth_date,
           this.address = this.registrationForm.value.address,
           this.email = this.registrationForm.value.email,
-          this.phone_number = this.registrationForm.value.phone_number,
+          this.phone_number = this.registrationForm.value.phone_number;
       
-            this.EditMember= selectedItem.member_id;
-           return this.http.put("http://localhost:3000/member/" + this.member_id, selectedItem).subscribe(response => console.log(response)), location.pathname="./member";
+            if(this.first_name !== '' && this.last_name !== '' && this.birth_date !== ''  && this.address !== ''  && this.email !== ''  && this.phone_number !== '' ){
+           return this.http.put("http://localhost:3000/member/" + this.member_id, selectedItem).subscribe(response =>
+           {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()},);
+            }else{
+              this.errorSuccess()
+            }
+          }
+
+          showSuccess(any){
+            this.toastr.success('Member' + ' ' + this.registrationForm.value.first_name + ' ' + this.registrationForm.value.last_name + ' ' + 'has been successfully edited', 'Successfully');
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Member not edited, please fill the required fields or try again', 'Error')
           }
 
 }

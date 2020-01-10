@@ -21,12 +21,12 @@
         <tbody>
           <tr *ngFor="let genre of Genres | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
             <td>{{genre.genre_name}}</td>
-<td>
+
   <div class="end">
             <button class="btn" (click)="DeleteGenre(genre)" title="Delete"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
             <button class="btn" (click)="EditGenre(genre)" title="Edit"><fa-icon [icon]="faUserEdit"></fa-icon></button>
             </div>
-</td>
+
           </tr>
   
         </tbody>

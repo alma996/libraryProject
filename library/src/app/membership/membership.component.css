@@ -1,8 +1,13 @@
 
 
-.search-user{
+.search{
  padding: 20px;
 
+}
+
+h1{
+    text-align: center;
+    padding: 20px;
 }
 
 .pagination{

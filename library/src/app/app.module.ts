@@ -40,6 +40,7 @@ import { DamageComponent } from './damage/damage.component'
 import { EditLoansComponent } from './loans/editLoans/editLoans.component'
 import { AddDamageComponent } from './damage/addDamage/addDamage.component'
 import { EditDamageComponent } from './damage/editDamage/editDamage.component'
+import { AllMembershipComponent } from './membership/allMembership.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -50,13 +51,14 @@ const routes: Routes = [
   { path: 'editAuthor/:author_id', component: EditAuthorComponent },
   { path: 'genre', component: GenreComponent },
   { path: 'addGenre', component: AddGenreComponent },
-  { path: 'editGenre/:genre_id/:genre_name', component: EditGenreComponent },
+  { path: 'editGenre/:genre_id', component: EditGenreComponent },
   { path: 'member', component: MemberComponent },
   { path: 'addMember', component: AddMemberComponent },
-  { path: 'editMember/:member_id/:first_name/:last_name/:birth_date/:address/:email/:phone_number', component: EditMemberComponent },
+  { path: 'editMember/:member_id', component: EditMemberComponent },
   { path: 'membership/:member_id', component: MembershipComponent },
-  { path: 'editMembership/:membership_id/:member_id/:date_of_payment/:year/:amount', component: EditMembershipComponent },
+  { path: 'editMembership/:membership_id/:member_id', component: EditMembershipComponent },
   { path: 'addMembership/:member_id', component: AddMembershipComponent },
+  { path: 'membership', component: AllMembershipComponent },
   { path: 'publisher', component: PublisherComponent },
   { path: 'editPublisher/:publisher_id/:publisher_name', component: EditPublisherComponent },
   { path: 'addPublisher', component: AddPublisherComponent },
@@ -96,6 +98,7 @@ const routes: Routes = [
     MembershipComponent,
     EditMembershipComponent,
     AddMembershipComponent,
+    AllMembershipComponent,
     PublisherComponent,
     EditPublisherComponent,
     AddPublisherComponent,

@@ -12,6 +12,8 @@ import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { MembershipService } from '../membership.service';
+import { ToastrService } from 'ngx-toastr'
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: './addMembership.component.html',
@@ -39,7 +41,7 @@ export class AddMembershipComponent {
         return this.registrationForm.get('amount')
       }
     
-      constructor(private MembershipService: MembershipService, private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private MembershipService: MembershipService,private toastr: ToastrService, private _location: Location, private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
 
     ngOnInit(){
@@ -58,8 +60,21 @@ export class AddMembershipComponent {
         }
 
         AddMembership(membershipdata){
+          console.log("alma",this.registrationForm.value.amount)
+          if(this.registrationForm.value.date_of_payment !== '0000-00-00' && this.registrationForm.value.date_of_payment !== '' && this.registrationForm.value.year !== '' && this.registrationForm.value.year !==null && this.registrationForm.value.amount !== '' && this.registrationForm.value.amount !==null){
           this.http.post("http://localhost:3000/membership/"+ this.member_id, membershipdata).subscribe((response) =>
-            this.router.navigate(['/membership/' + this.member_id]))
-          }
+          {this.showSuccess(response), this.router.navigate(['/membership/' + this.member_id])}, error =>{this.errorSuccess()}, );  
+          }else{
+            this.errorSuccess();
+          }  
+        }
     
+
+        showSuccess(any){
+          this.toastr.success('Membership successfully added', 'Successfully');
+        }
+      
+        errorSuccess(){
+          this.toastr.error('Please fill the required fields', 'Error');
+        }
 }

@@ -26,6 +26,26 @@ member.get('/member', (req, res) => {
     })
 })
 
+member.get('/:member_id', (req, res) => {
+  const memberID = req.params.member_id
+    Member.findOne({
+      attributes: ['member_id', 'first_name', 'last_name', 'birth_date', 'address', 'email', 'phone_number'],
+      where: {
+        member_id:memberID 
+      }
+    })
+      .then(member => {
+        if (member) {
+          res.json(member)
+        } else {
+          res.send('Member dos not exist')
+        }
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+  })
+
 member.post('/member', (req, res) => {
     const memberData = {
       first_name: req.body.first_name,

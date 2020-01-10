@@ -18,6 +18,12 @@ export class MembershipService {
   }
 
   baseUrl: string= "http://localhost:3000/membership/:id"
+  IdUrl: string= "http://localhost:3000/membership/";
+
+  public getMembershipById(id, id1){
+    return this.httpClient.get(this.IdUrl+id+'/'+id1);
+
+  }
 
   public getAllMembership(obj){
     return this.httpClient.get(this.baseUrl, obj).pipe(map(data=>

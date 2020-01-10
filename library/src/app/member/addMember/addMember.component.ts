@@ -12,6 +12,8 @@ import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { MemberService } from '../member.service';
+import { ToastrService } from 'ngx-toastr'
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: './addMember.component.html',
@@ -49,7 +51,7 @@ export class AddMemberComponent {
         return this.registrationForm.get('phone_number')
       }
     
-      constructor(private MemberService: MemberService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private MemberService: MemberService, private fb: FormBuilder, private router: Router, private http: HttpClient, private toastr: ToastrService, private _location: Location){
     }
 
     ngOnInit(){
@@ -65,9 +67,20 @@ export class AddMemberComponent {
         }
 
         AddMember(memberdata){
-            this.MemberService.addMembers(memberdata).subscribe((reponse)=>{
-              console.log(reponse), location.pathname="./member"
-             });
+          if(this.registrationForm.value.first_name !== '' && this.registrationForm.value.last_name !== '' && this.registrationForm.value.birth_date !== '' && this.registrationForm.value.address !== '' && this.registrationForm.value.email !== '' && this.registrationForm.value.phone_number !== ''){
+            this.MemberService.addMembers(memberdata).subscribe((response)=>
+            {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()}, );
+          }else{
+            this.errorSuccess()
+          }
+          }
+
+          showSuccess(any){
+            this.toastr.success('Member' + ' ' + this.registrationForm.value.first_name + ' ' + this.registrationForm.value.last_name + ' ' + 'successfully added', 'Successfully');
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Please fill the required fields', 'Error');
           }
     
 }

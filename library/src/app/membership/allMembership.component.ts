@@ -15,13 +15,13 @@ import { faUserEdit, faSearch} from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr'
 
 @Component({
-  templateUrl: './membership.component.html',
+  templateUrl: './allMembership.component.html',
   styleUrls: ['./membership.component.css']
 })
-export class MembershipComponent implements OnInit{
+export class AllMembershipComponent implements OnInit{
   faTrash = faTrash;
   faUserEdit = faUserEdit;
-  faSearch = faSearch;
+  faSearch = faSearch
   Memberships: any;
   Delete: any;
   searchText: any;
@@ -40,7 +40,7 @@ export class MembershipComponent implements OnInit{
     })
 
   
-    this.http.get("http://localhost:3000/membership/"+ this.member_id).subscribe((response) =>{
+    this.http.get("http://localhost:3000/membership").subscribe((response) =>{
       this.Memberships=response;
       console.log(this.Memberships)
   
@@ -51,9 +51,9 @@ export class MembershipComponent implements OnInit{
   
 
   GetAllMemberships(){
-    // User data which we have received from the registration form.
-    this.MembershipService.getAllMembership(this.member_id).subscribe((reponse)=>{
-      this.Memberships=reponse;
+    this.http.get("http://localhost:3000/membership").subscribe((response) =>{
+        this.Memberships=response;
+        console.log(this.Memberships)
      });
 
     }
@@ -78,14 +78,14 @@ export class MembershipComponent implements OnInit{
   
     }
   
-    showSuccess(){
-      this.toastr.success('Membership successfully deleted', 'Successfully');
-    }
-  
-    errorSuccess(){
-      this.toastr.error('Membership has not been deleted', 'Error');
-    }
 
+    showSuccess(){
+        this.toastr.success('Member successfully deleted', 'Successfully');
+      }
+    
+      errorSuccess(){
+        this.toastr.error('Member has not been deleted', 'Error');
+      }
 
 
 }

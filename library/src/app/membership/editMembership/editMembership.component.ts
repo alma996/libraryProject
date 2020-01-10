@@ -12,6 +12,9 @@ import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { MembershipService } from '../membership.service'
+import { MembershipModel } from '../MembershipModel'
+import { ToastrService } from 'ngx-toastr';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -28,7 +31,7 @@ export class EditMembershipComponent {
     year: any;
     amount: any;
 
-      constructor(private route: ActivatedRoute, MembershipService: MembershipService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private route: ActivatedRoute, private MembershipService: MembershipService, private toastr: ToastrService, private _location: Location, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
     
 
@@ -36,10 +39,14 @@ export class EditMembershipComponent {
         this.route.paramMap.subscribe(params => {
             this.membership_id = params.get('membership_id');
             this.member_id = params.get('member_id');
-            this.date_of_payment = params.get('date_of_payment');
-            this.year = params.get('year');
-            this.amount= params.get('amount');
           })
+
+          this.MembershipService.getMembershipById(this.membership_id, this.member_id).subscribe((response: MembershipModel)=>{
+            console.log(response);
+            this.date_of_payment = response.date_of_payment
+            this.year = response.year
+            this.amount = response.amount
+          });
 
         this.registrationForm = this.fb.group({
         membership_id: [''],
@@ -50,16 +57,29 @@ export class EditMembershipComponent {
           })
         }
 
-        EditMembership(selectedItem: any){
+        EditMembership(selectedItem: true){
 
             this.membership_id = this.registrationForm.value.membership_id,
             this.member_id = this.registrationForm.value.member_id,
           this.date_of_payment = this.registrationForm.value.date_of_payment,
           this.year = this.registrationForm.value.year,
-          this.amount = this.registrationForm.value.amount,
+          this.amount = this.registrationForm.value.amount;
       
-            this.EditMembership= selectedItem.membership_id;
-           return this.http.put("http://localhost:3000/membership/" + this.membership_id, selectedItem).subscribe(response => console.log(response)), location.pathname="./membership";
+          if(this.date_of_payment !== '0000-00-00' && this.date_of_payment !== null && this.year !== null && this.year !== 0 && this.amount !== 0 && this.amount !== null){
+           return this.http.put("http://localhost:3000/membership/" + this.membership_id, selectedItem).subscribe(response =>
+           {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()},);
+          }else{
+            this.errorSuccess()
+          }
+          }
+
+          
+          showSuccess(any){
+            this.toastr.success('Membership has been successfully edited', 'Successfully');
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Membership not edited, please fill the required fields or try again', 'Error')
           }
 
 }

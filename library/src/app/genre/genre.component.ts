@@ -59,12 +59,12 @@ export class GenreComponent implements OnInit{
     DeleteGenre(selectedItem: any){
       this.Delete= selectedItem.genre_id;
      return this.http.delete("http://localhost:3000/genre/"+ this.Delete).subscribe(response =>
-     {console.log(response),location.reload(),30000, this.showSuccess()},
+     {console.log(response),this.GetAllGenres(), this.showSuccess()},
      error =>{this.errorSuccess()}, );
     }
 
     EditGenre(selectedItem: any){
-      this.router.navigate(['/editGenre/'+ selectedItem.genre_id +'/' + selectedItem.genre_name]);
+      this.router.navigate(['/editGenre/'+ selectedItem.genre_id]);
   
     }
 

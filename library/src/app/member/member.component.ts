@@ -11,7 +11,8 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { map } from "rxjs/operators"; 
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { faTrash} from '@fortawesome/free-solid-svg-icons';
-import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
+import { faUserEdit, faSearch} from '@fortawesome/free-solid-svg-icons';
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   templateUrl: './member.component.html',
@@ -20,6 +21,7 @@ import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 export class MemberComponent implements OnInit{
   faTrash = faTrash;
   faUserEdit = faUserEdit;
+  faSearch = faSearch;
 
   Members: any;
   Delete: any;
@@ -28,7 +30,7 @@ export class MemberComponent implements OnInit{
   p: number = 1;
 
 
-  constructor(private MemberService: MemberService, private router: Router, private http: HttpClient){
+  constructor(private MemberService: MemberService, private router: Router, private http: HttpClient, private toastr: ToastrService){
   }
 
 
@@ -57,11 +59,13 @@ export class MemberComponent implements OnInit{
 
     DeleteMember(selectedItem: any){
       this.Delete= selectedItem.member_id;
-     return this.http.delete("http://localhost:3000/member/"+ this.Delete).subscribe(response => console.log(response)), location.reload()
+     return this.http.delete("http://localhost:3000/member/"+ this.Delete).subscribe(response =>
+     {console.log(response),this.GetAllMembers(), this.showSuccess()},
+     error =>{this.errorSuccess()}, );
     }
 
     EditMember(selectedItem: any){
-      this.router.navigate(['/editMember/'+ selectedItem.member_id +'/' + selectedItem.first_name +'/' + selectedItem.last_name +'/' + selectedItem.birth_date +'/' + selectedItem.address +'/' + selectedItem.email +'/' + selectedItem.phone_number]);
+      this.router.navigate(['/editMember/'+ selectedItem.member_id]);
   
     }
 
@@ -69,6 +73,14 @@ export class MemberComponent implements OnInit{
     
       this.router.navigate(['/membership/'+ selectedItem.member_id]);
 
+    }
+
+    showSuccess(){
+      this.toastr.success('Member successfully deleted', 'Successfully');
+    }
+  
+    errorSuccess(){
+      this.toastr.error('Member has not been deleted', 'Error');
     }
   
 

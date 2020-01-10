@@ -26,6 +26,27 @@ genre.get('/genre', (req, res) => {
     })
 })
 
+
+genre.get('/:genre_id', (req, res) => {
+  const genreID = req.params.genre_id
+    Genre.findOne({
+      attributes: ['genre_id', 'genre_name'],
+      where: {
+        genre_id:genreID 
+      }
+    })
+      .then(genre => {
+        if (genre) {
+          res.json(genre)
+        } else {
+          res.send('Genre dos not exist')
+        }
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+  })
+
 genre.post('/genre', (req, res) => {
     const genreData = {
       genre_name: req.body.genre_name,

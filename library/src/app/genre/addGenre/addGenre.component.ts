@@ -52,11 +52,11 @@ export class AddGenreComponent {
           }
 
           showSuccess(any){
-            this.toastr.success('Genre successfully deleted', 'Successfully');
+            this.toastr.success('Genre' + ' ' + this.registrationForm.value.genre_name + ' ' + 'successfully added', 'Successfully');
           }
         
           errorSuccess(){
-            this.toastr.error('Genre has not been deleted', 'Error');
+            this.toastr.error('Please fill the required fields', 'Error');
           }
     
 }

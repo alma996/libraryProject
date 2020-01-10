@@ -11,10 +11,14 @@ export class GenreService {
   
 
   baseUrl: string= "http://localhost:3000/genre/genre";
+  IdUrl: string= "http://localhost:3000/genre/";
 
   constructor(private httpClient : HttpClient) { }
 
+  public getGenreById(id){
+    return this.httpClient.get(this.IdUrl+id);
 
+  }
 
   public getAllGenres(){
     return this.httpClient.get(this.baseUrl);

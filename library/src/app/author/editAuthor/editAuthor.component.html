@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <h2>Edit Author</h2>
-    <form [formGroup]="registrationForm">
+    <form [formGroup]="registrationForm" (ngSubmit)="EditAuthor(registrationForm.value)">
   
         <div class="form container-md">
         <div class="form-group">
@@ -18,7 +18,7 @@
       </div>
   
   <div style="text-align: center;">
-      <button class="btn btn-primary" type="submit" (click)="EditAuthor(registrationForm.value)" >Edit Author</button>&nbsp;&nbsp;
+      <button class="btn btn-primary" type="submit">Edit Author</button>&nbsp;&nbsp;
     </div>
     </div>
     </form>

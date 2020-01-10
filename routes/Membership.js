@@ -34,6 +34,58 @@ membership.get('/:id', (req, res) => {
     })
 })
 
+membership.get('', (req, res) => {
+  Member.hasMany(Membership, {foreignKey: 'member_id'})
+  Membership.belongsTo(Member, {foreignKey: 'member_id'})
+
+Membership.findAll({
+  attributes: ['membership_id', 'member_id', 'date_of_payment', 'year', 'amount'],
+   include: [{
+       model: Member,
+   }]
+  })
+  .then(membership => {
+    if (membership) {
+      res.json(membership)
+    } else {
+      res.send('Membership dos not exist')
+    }
+  })
+  .catch(err => {
+    res.send('error: ' + err)
+  })
+})
+
+membership.get('/:membership_id/:member_id', (req, res) => {
+  const membershipID = req.params.membership_id;
+  const memberID = req.params.member_id;
+  Member.hasMany(Membership, {foreignKey: 'member_id'})
+  Membership.belongsTo(Member, {foreignKey: 'member_id'})
+
+Membership.findOne({
+  attributes: ['membership_id', 'member_id', 'date_of_payment', 'year', 'amount'],
+  where: [{
+    membership_id: membershipID
+  }],
+   include: [{
+       model: Member,
+       where: [{
+        member_id: memberID
+      }]
+   }]
+  })
+  .then(membership => {
+    if (membership) {
+      res.json(membership)
+    } else {
+      res.send('Membership dos not exist')
+    }
+  })
+  .catch(err => {
+    res.send('error: ' + err)
+  })
+})
+
 membership.post('/:id', (req, res) => {
     const memberID = req.params.id
     Member.hasMany(Membership, {foreignKey: 'member_id'})
