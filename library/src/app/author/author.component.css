@@ -18,6 +18,6 @@ h1{
     padding: 20px;
 }
 
-.name{
+.text-transform{
     text-transform: capitalize;
 }

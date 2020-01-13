@@ -6,7 +6,7 @@
       <div class="form-group">
         <label>Publisher Name</label>
         <input [class.is-invalid]="publisher_name.invalid
-          && publisher_name.touched" type="text" class="form-control" formControlName="publisher_name" ngModel>
+          && publisher_name.touched" type="text" class="form-control" formControlName="publisher_name" ngModel required>
   
         <div *ngIf="publisher_name.invalid && publisher_name.touched">
           <small *ngIf="publisher_name.errors ?.required" class="text-danger">Publisher name is required</small>

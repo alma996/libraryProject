@@ -62,10 +62,6 @@ export class AllMembershipComponent implements OnInit{
       this.router.navigate(['/addMembership/' + this.member_id]);
     }
 
-    BackToMember(){
-      this.router.navigate(['/member']);
-    }
-
     DeleteMembership(selectedItem: any){
       this.Delete= selectedItem.membership_id;
      return this.http.delete("http://localhost:3000/membership/"+ this.Delete).subscribe(response =>

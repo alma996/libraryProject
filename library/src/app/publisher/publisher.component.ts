@@ -11,7 +11,8 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { map } from "rxjs/operators"; 
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { faTrash} from '@fortawesome/free-solid-svg-icons';
-import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
+import { faUserEdit, faSearch} from '@fortawesome/free-solid-svg-icons';
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   templateUrl: './publisher.component.html',
@@ -19,6 +20,7 @@ import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 })
 export class PublisherComponent implements OnInit{
   faTrash = faTrash;
+  faSearch = faSearch;
   faUserEdit = faUserEdit;
 
   Publishers: any;
@@ -27,7 +29,7 @@ export class PublisherComponent implements OnInit{
   p: number = 1;
 
 
-  constructor(private PublisherService: PublisherService, private router: Router, private http: HttpClient){
+  constructor(private PublisherService: PublisherService, private router: Router, private http: HttpClient, private toastr: ToastrService){
   }
 
 
@@ -40,6 +42,14 @@ export class PublisherComponent implements OnInit{
       
 
   } 
+
+    GetAllPublisher(){
+      this.PublisherService.getAllPublisher().subscribe((reponse)=>{
+        console.log(reponse)
+        this.Publishers=reponse
+       });
+      
+    }
   
     AddPublisher(){
       this.router.navigate(['/addPublisher']);
@@ -47,15 +57,23 @@ export class PublisherComponent implements OnInit{
 
     DeletePublisher(selectedItem: any){
       this.Delete= selectedItem.publisher_id;
-     return this.http.delete("http://localhost:3000/publisher/"+ this.Delete).subscribe(response => console.log(response)), location.reload()
+     return this.http.delete("http://localhost:3000/publisher/"+ this.Delete).subscribe(response =>
+     {console.log(response),this.GetAllPublisher(), this.showSuccess()},
+     error =>{this.errorSuccess()}, );
     }
 
     EditPublisher(selectedItem: any){
-      this.router.navigate(['/editPublisher/'+ selectedItem.publisher_id +'/' + selectedItem.publisher_name]);
+      this.router.navigate(['/editPublisher/'+ selectedItem.publisher_id]);
   
     }
   
-
+    showSuccess(){
+      this.toastr.success('Publisher successfully deleted', 'Successfully');
+    }
+  
+    errorSuccess(){
+      this.toastr.error('Publisher has not been deleted', 'Error');
+    }
 
 
 

@@ -77,22 +77,24 @@ export class EditBookComponent {
 
         }
 
-        EditBook(selectedItem: any){
+        EditBook(selectedItem: true){
 
           this.book_id = this.registrationForm.value.book_id,
           this.author_id = this.registrationForm.value.author_id,
           this.genre_id = this.registrationForm.value.genre_id,
           this.publisher_id = this.registrationForm.value.publisher_id,
-          this.book_name = this.registrationForm.value.book_name,
+          this.book_name = this.registrationForm.value.book_name;
 
-            this.EditBook= selectedItem.book_id;
+          if(this.registrationForm.value.book_name !== '' && this.registrationForm.value.author_id !== '' && this.registrationForm.value.genre_id !== '' && this.registrationForm.value.publisher_id !== ''){
            return this.http.put("http://localhost:3000/book/" + this.book_id, selectedItem).subscribe(response =>
             {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()},);
+          }else{
+            this.errorSuccess()
+          }
           }
 
           showSuccess(any){
             this.toastr.success('The ' + this.registrationForm.value.book_name + ' ' + 'book has been successfully edited', 'Successfully');
-            console.log(this.registrationForm.value.book_name)
           }
         
           errorSuccess(){

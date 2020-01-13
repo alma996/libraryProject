@@ -12,6 +12,8 @@ import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { PublisherService } from '../publisher.service';
+import { ToastrService } from 'ngx-toastr'
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: './addPublisher.component.html',
@@ -29,7 +31,7 @@ export class AddPublisherComponent {
         return this.registrationForm.get('publisher_name')
       }
 
-      constructor(private PublisherService: PublisherService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private PublisherService: PublisherService,private toastr: ToastrService, private _location: Location, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
 
     ngOnInit(){
@@ -40,9 +42,20 @@ export class AddPublisherComponent {
         }
 
         AddPublisher(publisherdata){
-            this.PublisherService.addPublisher(publisherdata).subscribe((reponse)=>{
-              console.log(reponse), location.pathname="./publisher"
-             });
+          if(this.registrationForm.value.publisher_name !== ''){
+            this.PublisherService.addPublisher(publisherdata).subscribe((response)=>
+            {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()}, );
+            }else{
+              this.errorSuccess()
+            }
+          }
+
+          showSuccess(any){
+            this.toastr.success('Publisher' + ' ' + this.registrationForm.value.publisher_name + ' ' + 'successfully added', 'Successfully');
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Please fill the required fields', 'Error');
           }
     
 }

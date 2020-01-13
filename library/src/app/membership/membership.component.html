@@ -1,5 +1,6 @@
 <div class="container-md">
-  <h1>Membership</h1>
+  <h1>Membership fees</h1>
+  <h3 class="text-transform"  *ngFor="let membership of Memberships">{{membership.member.first_name}} {{membership.member.last_name}}</h3>
     <div class="row">
       
       <div class="search conainer-md">
@@ -26,7 +27,7 @@
           <a [href]="AddMembership()"></a>
         </div>
         <tbody>
-          <tr *ngFor="let membership of Memberships | filter: searchText">
+          <tr class="text-transform" *ngFor="let membership of Memberships | filter: searchText">
             <td>{{membership.member.first_name}}</td>
             <td>{{membership.member.last_name}}</td>
             <td>{{membership.date_of_payment}}</td>

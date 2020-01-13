@@ -39,10 +39,9 @@ export class MembershipComponent implements OnInit{
       this.member_id = params.get('member_id');
     })
 
-  
+
     this.http.get("http://localhost:3000/membership/"+ this.member_id).subscribe((response) =>{
       this.Memberships=response;
-      console.log(this.Memberships)
   
     });
 
@@ -69,7 +68,7 @@ export class MembershipComponent implements OnInit{
     DeleteMembership(selectedItem: any){
       this.Delete= selectedItem.membership_id;
      return this.http.delete("http://localhost:3000/membership/"+ this.Delete).subscribe(response =>
-     {console.log(response),this.GetAllMemberships(), this.showSuccess()},
+     {console.log(response),this.router.navigate(['/member']), this.showSuccess()},
      error =>{this.errorSuccess()}, );
     }
 

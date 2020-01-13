@@ -1,6 +1,6 @@
 
 
-.search-user{
+.search{
     padding: 20px;
    
    }
@@ -12,3 +12,12 @@
    .end{
        text-align: end;
    }
+
+   h1{
+    text-align: center;
+    padding: 20px;
+}
+
+.text-transform{
+    text-transform: capitalize;
+}

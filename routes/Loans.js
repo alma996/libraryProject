@@ -41,6 +41,47 @@ loans.get('/loans', (req, res) => {
     })
 })
 
+loans.get('/:loans_id/:member_id/:book_id', (req, res) => {
+  const loansID = req.params.loans_id;
+  const memberID = req.params.member_id;
+  const bookID = req.params.book_id;
+  
+  Member.hasMany(Loans, {foreignKey: 'member_id'})
+  Loans.belongsTo(Member, {foreignKey: 'member_id'})
+
+  Book.hasMany(Loans, {foreignKey: 'book_id'})
+  Loans.belongsTo(Book, {foreignKey: 'book_id'})
+
+Loans.findOne({
+  attributes: ['loans_id', 'member_id', 'book_id', 'loans_date', 'return_status'],
+  where: [{
+    loans_id: loansID
+  }],
+   include: [{
+       model: Member,
+       where: [{
+        member_id: memberID
+      }]
+   },
+   {
+    model: Book,
+    where: [{
+      book_id: bookID
+    }]
+     }]
+  })
+  .then(loans => {
+    if (loans) {
+      res.json(loans)
+    } else {
+      res.send('Loans dos not exist')
+    }
+  })
+  .catch(err => {
+    res.send('error: ' + err)
+  })
+})
+
 loans.delete('/:id', (req, res)=>{
   const loansID = req.params.id
   Member.hasMany(Loans, {foreignKey: 'member_id'})

@@ -45,6 +45,13 @@ export class BookComponent implements OnInit{
 
     
   }
+
+  GetAllBooks(){
+    this.BookService.getAllBook().subscribe((reponse)=>{
+      this.Books=reponse;
+
+     });
+  }
   
 
     AddBook(){
@@ -53,7 +60,8 @@ export class BookComponent implements OnInit{
 
     DeleteBook(selectedItem: any){
       this.Delete= selectedItem.book_id;
-     return this.http.delete("http://localhost:3000/book/"+ this.Delete).subscribe(response =>{console.log(response),location.reload(),30000, this.showSuccess()},
+     return this.http.delete("http://localhost:3000/book/"+ this.Delete).subscribe(response =>
+     {console.log(response),this.GetAllBooks(), this.showSuccess()},
       error =>{this.errorSuccess()}, );
     
     }

@@ -1,5 +1,5 @@
 <div class="container-md">
-  <h1>List of books</h1>
+  <h1>List of Books</h1>
     <div class="row">
 
     <div class="search conainer-md">
@@ -23,17 +23,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="name" *ngFor="let book of Books | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
+          <tr class="text-transform" *ngFor="let book of Books | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
             <td>{{book.book_name}}</td>
             <td>{{book.genre.genre_name}}</td>
             <td>{{book.author.first_name}}</td>
             <td>{{book.author.last_name}}</td>
             <td>{{book.publisher.publisher_name}}</td>
             
-            
+            <div class="end">
             <button class="btn" (click)="DeleteBook(book)" title="Delete"><fa-icon [icon]="faTrash"></fa-icon></button>&nbsp;&nbsp;
             <button class="btn" (click)="EditBook(book)" title="Edit"><fa-icon [icon]="faUserEdit"></fa-icon></button>
-            
+            </div>
           </tr>
   
         </tbody>

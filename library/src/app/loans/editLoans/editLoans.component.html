@@ -1,6 +1,6 @@
 <div class="container-md">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <h2>Add new Loans</h2>
+  <h2>Edit Loans</h2>
   <form [formGroup]="registrationForm" (ngSubmit)="EditLoans(registrationForm.value)">
 <div class="form container-md">
 
@@ -20,19 +20,14 @@
 
     <div class="form-group">
       <label>Loans Date</label>
-      <input [class.is-invalid]="loans_date.invalid
-        && loans_date.touched" type="date" class="form-control" formControlName="loans_date" [(ngModel)]=loans_date>
-
-      <div *ngIf="loans_date.invalid && loans_date.touched">
-        <small *ngIf="loans_date.errors ?.required" class="text-danger">Lonas date is required</small>
-      </div>
+      <input type="date" class="form-control" formControlName="loans_date" [(ngModel)]=loans_date required>
     </div>
 
+    
     <div class="form-group">
       <label>Member</label>
       <button class="btn btn1" (click)="AddMember()"><fa-icon [icon]="faPlusCircle"></fa-icon></button>
-      <select class="form-control" formControlName="member_name" [(ngModel)]="member_name">
-        <option>{{member_name}}</option>
+      <select class="form-control" formControlName="member_id" [(ngModel)]="member_id" value={{member_id}}>
       <option *ngFor="let member of Members" [value]=member.member_id>
       {{member.first_name}} {{member.last_name}}
       </option>
@@ -43,8 +38,7 @@
     <div class="form-group">
       <label>Book</label>
       <button class="btn" (click)="AddBook()"><fa-icon [icon]="faPlusCircle"></fa-icon></button>
-      <select class="form-control" formControlName="book_name" [(ngModel)]="book_name">
-        <option>{{book_name}}</option>
+      <select class="form-control" formControlName="book_id" [(ngModel)]="book_id" value={{book_id}}>
       <option *ngFor="let book of Books" [value]=book.book_id>
         {{book.book_name}}
       </option>

@@ -12,6 +12,8 @@ import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { LoansService } from '../loans.service';
+import { ToastrService } from 'ngx-toastr'
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: './addLoans.component.html',
@@ -44,7 +46,7 @@ export class AddLoansComponent {
         return this.registrationForm.get('return_status')
       }
     
-      constructor(private LoansService: LoansService, private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private LoansService: LoansService, private route: ActivatedRoute,private toastr: ToastrService, private _location: Location, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
 
     ngOnInit(){
@@ -68,8 +70,13 @@ export class AddLoansComponent {
         })
         }
         AddLoans(loansdata){
+          if(this.registrationForm.value.return_status !== '' && this.registrationForm.value.loans_date !== '' && this.registrationForm.value.member_id !== '' && this.registrationForm.value.book_id !== ''){
           this.http.post("http://localhost:3000/loans/"+ this.registrationForm.value.member_id + '/' + this.registrationForm.value.book_id, loansdata).subscribe((response) =>
-            console.log(response))
+          {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()}, );
+          }else{
+            this.errorSuccess()
+            
+          }
           }
 
           AddMember(){
@@ -78,6 +85,14 @@ export class AddLoansComponent {
 
           AddBook(){
             this.router.navigate(['/addBook']);
+          }
+
+          showSuccess(any){
+            this.toastr.success('Loan successfully added', 'Successfully');
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Please fill the required fields', 'Error');
           }
     
 }

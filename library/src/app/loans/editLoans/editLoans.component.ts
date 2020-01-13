@@ -13,6 +13,8 @@ import { faUserEdit, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import {ToastrService} from 'ngx-toastr';
 import { LoansService } from '../loans.service';
+import { LoansModel } from '../LoansModel'
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -28,16 +30,16 @@ export class EditLoansComponent {
     loans_id: any;
     return_status: string;
     loans_date: any;
-    member_name: string;
+    member_id: string;
     member_name2: string;
-    book_name: string;
+    book_id: string;
 
     Books: any;
     Members: any;
     Loans: any;
 
 
-      constructor( private toast: ToastrService,private route: ActivatedRoute, private LoansService: LoansService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor( private toastr: ToastrService,private _location: Location, private route: ActivatedRoute, private LoansService: LoansService, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
     
 
@@ -45,12 +47,15 @@ export class EditLoansComponent {
 
         this.route.paramMap.subscribe(params => {
           this.loans_id = params.get('loans_id')
-            this.return_status = params.get('return_status');
-            this.loans_date = params.get('loans_date');
-            this.member_name = params.get('first_name')
-            this.member_name2 = params.get('last_name')
-            this.book_name = params.get('book_id')
+          this.book_id = params.get('book_id')
+          this.member_id = params.get('member_id')
           })
+
+          this.LoansService.getLoansById(this.loans_id,this.member_id,this.book_id).subscribe((response: LoansModel)=>{
+            console.log(response);
+            this.return_status = response.return_status
+            this.loans_date = response.loans_date
+          });
 
           this.LoansService.getAllBook().subscribe((reponse)=>{
             this.Books=reponse;
@@ -71,9 +76,9 @@ export class EditLoansComponent {
           loans_id: [''],
           return_status: [''],
           loans_date: [''],
-          member_name: [''],
+          member_id: [''],
           member_name2: [''],
-          book_name: [''],
+          book_id: [''],
           })
         }
 
@@ -85,17 +90,30 @@ export class EditLoansComponent {
           this.router.navigate(['/addBook'])
         }
 
-        EditLoans(selectedItem: any){
+        EditLoans(selectedItem: true){
 
           this.loans_id = this.registrationForm.value.loans_id,
           this.return_status = this.registrationForm.value.return_status,
           this.loans_date = this.registrationForm.value.loans_date,
-          this.member_name = this.registrationForm.value.member_name,
-          this.book_name = this.registrationForm.value.book_name,
+          this.member_id = this.registrationForm.value.member_id,
+          this.book_id = this.registrationForm.value.book_id,
+          console.log(this.member_id)
           
 
-            this.EditLoans= selectedItem.loans_id;
-           return this.http.put("http://localhost:3000/loans/" + this.loans_id, selectedItem).subscribe(response => console.log(response))
+          if(this.loans_date !== '0000-00-00' && this.loans_date !== null && this.return_status !== null && this.registrationForm.value.return_status !== 0){
+           return this.http.put("http://localhost:3000/loans/" + this.loans_id, selectedItem).subscribe(response =>
+           {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()},);
+          }else{
+            this.errorSuccess()
+          }
+        }
+
+          showSuccess(any){
+            this.toastr.success('Membership has been successfully edited', 'Successfully');
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Membership not edited, please fill the required fields or try again', 'Error')
           }
 
 }

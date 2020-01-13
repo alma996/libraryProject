@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="name" *ngFor="let author of Authors | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
+          <tr class="text-transform" *ngFor="let author of Authors | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
             <td>{{author.first_name}}</td>
             <td>{{author.last_name}}</td>
   <div class="end">
@@ -39,6 +39,4 @@
 
     <button class="btn" (click)="AddAuthor()" class="btn btn-primary">Add Author</button>&nbsp;&nbsp;
   </div>
-  
-  
   <router-outlet></router-outlet>

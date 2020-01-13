@@ -1,8 +1,12 @@
 
 
-.search-user{
+.search{
  padding: 20px;
 
+}
+
+h1{
+    text-align: center;
 }
 
 .pagination{
@@ -16,3 +20,6 @@
 .btn{
     padding: 11px;
 }
+ .text-transform{
+     text-transform: capitalize;
+ }

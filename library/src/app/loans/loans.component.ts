@@ -11,8 +11,8 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { map, isEmpty } from "rxjs/operators"; 
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { faTrash} from '@fortawesome/free-solid-svg-icons';
-import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
-import { BookComponent } from '../book/book.component';
+import { faUserEdit, faSearch} from '@fortawesome/free-solid-svg-icons';
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   templateUrl: './loans.component.html',
@@ -21,13 +21,14 @@ import { BookComponent } from '../book/book.component';
 export class LoansComponent implements OnInit{
   faTrash = faTrash;
   faUserEdit = faUserEdit;
+  faSearch = faSearch
 
   Loans: any;
   Delete: any;
   searchText: any;
   p: number = 1;
 
-  constructor(private fb: FormBuilder, private LoansService: LoansService,private route: ActivatedRoute, private router: Router, private http: HttpClient){
+  constructor(private fb: FormBuilder,private toastr: ToastrService, private LoansService: LoansService,private route: ActivatedRoute, private router: Router, private http: HttpClient){
   }
 
 
@@ -43,6 +44,11 @@ export class LoansComponent implements OnInit{
     
   }
   
+    GetAllLoans(){
+      this.LoansService.getAllLoans().subscribe((reponse)=>{
+        this.Loans=reponse;
+    });
+  }
 
     AddLoans(){
       this.router.navigate(['/addLoans']);
@@ -50,11 +56,13 @@ export class LoansComponent implements OnInit{
 
     DeleteLoans(selectedItem: any){
       this.Delete= selectedItem.loans_id;
-     return this.http.delete("http://localhost:3000/loans/"+ this.Delete).subscribe(response => console.log(response)), location.reload()
+     return this.http.delete("http://localhost:3000/loans/"+ this.Delete).subscribe(response =>
+     {console.log(response),this.GetAllLoans(), this.showSuccess()},
+     error =>{this.errorSuccess()}, );
     }
 
     EditLoans(selectedItem: any){
-      this.router.navigate(['/editLoans/'+ selectedItem.loans_id +'/' + selectedItem.member.first_name + ' ' + selectedItem.member.last_name +'/' + selectedItem.book.book_name +'/' + selectedItem.loans_date +'/' + selectedItem.return_status]);
+      this.router.navigate(['/editLoans/'+ selectedItem.loans_id +'/' + selectedItem.member_id + '/' + selectedItem.book_id]);
     }
   
 
@@ -62,6 +70,14 @@ export class LoansComponent implements OnInit{
     
       this.router.navigate(['/damage/'+ selectedItem.loans_id]);
 
+    }
+
+    showSuccess(){
+      this.toastr.success('Loans successfully deleted', 'Successfully');
+    }
+  
+    errorSuccess(){
+      this.toastr.error('Loans has not been deleted', 'Error');
     }
 
 

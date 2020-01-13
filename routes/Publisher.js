@@ -26,6 +26,26 @@ publisher.get('/publisher', (req, res) => {
     })
 })
 
+publisher.get('/:publisher_id', (req, res) => {
+  const publisherID = req.params.publisher_id
+    Publisher.findOne({
+      attributes: ['publisher_id', 'publisher_name'],
+      where: {
+        publisher_id:publisherID 
+      }
+    })
+      .then(publisher => {
+        if (publisher) {
+          res.json(publisher)
+        } else {
+          res.send('Publisher dos not exist')
+        }
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+  })
+
 publisher.post('/publisher', (req, res) => {
     const publisherData = {
       publisher_name: req.body.publisher_name,

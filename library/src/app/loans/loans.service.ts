@@ -20,9 +20,16 @@ export class LoansService {
   UrlLoans: string= "http://localhost:3000/loans/loans"
   UrlAuthor: string= "http://localhost:3000/author/author"
   UrlMember: string= "http://localhost:3000/member/member"
+  IdUrl: string= "http://localhost:3000/loans/"
   public getAllBook(){
     return this.httpClient.get(this.baseUrl2).pipe(map(data=>
      data));
+  }
+  
+
+  public getLoansById(id,id2,id3){
+    return this.httpClient.get(this.IdUrl+id+'/'+id2+'/'+id3);
+
   }
 
   public getAllLoans(){

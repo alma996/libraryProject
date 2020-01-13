@@ -12,6 +12,9 @@ import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { PublisherService } from '../publisher.service'
+import {Location} from '@angular/common';
+import { PublisherModel } from '../PublisherModel'
+import {ToastrService} from 'ngx-toastr';
 
 
 @Component({
@@ -25,15 +28,19 @@ export class EditPublisherComponent {
     publisher_id: any;
     publisher_name: string;
 
-      constructor(private route: ActivatedRoute, PublisherService: PublisherService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private route: ActivatedRoute, private toastr: ToastrService, private _location: Location,private PublisherService: PublisherService, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
     
 
     ngOnInit(){
         this.route.paramMap.subscribe(params => {
             this.publisher_id = params.get('publisher_id');
-            this.publisher_name = params.get('publisher_name');
           })
+
+          this.PublisherService.getPublisherById(this.publisher_id).subscribe((reponse: PublisherModel)=>{
+            console.log(reponse);
+            this.publisher_name = reponse.publisher_name
+          });
 
         this.registrationForm = this.fb.group({
         publisher_id: [''],
@@ -41,13 +48,25 @@ export class EditPublisherComponent {
           })
         }
 
-        EditPublisher(selectedItem: any){
+        EditPublisher(selectedItem: true){
 
             this.publisher_id = this.registrationForm.value.publisher_id,
-            this.publisher_name = this.registrationForm.value.publisher_name,
+            this.publisher_name = this.registrationForm.value.publisher_name;
       
-            this.EditPublisher= selectedItem.publisher_name;
-           return this.http.put("http://localhost:3000/publisher/" + this.publisher_id, selectedItem).subscribe(response => console.log(response)), location.pathname="./membership";
+          if(this.registrationForm.value.publisher_name !== ''){
+           return this.http.put("http://localhost:3000/publisher/" + this.publisher_id, selectedItem).subscribe(response =>
+           {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()},);
+          }else{
+            this.errorSuccess()
+          }
+          }
+
+          showSuccess(any){
+            this.toastr.success('Publisher' + ' ' + this.registrationForm.value.publisher_name + ' ' + 'has been successfully edited', 'Successfully');
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Publisher not edited, please fill the required fields or try again', 'Error')
           }
 
 }

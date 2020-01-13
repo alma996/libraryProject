@@ -1,5 +1,5 @@
 <div class="container-md">
-  <h1>List of members</h1>
+  <h1>List of Members</h1>
     <div class="row">
 
       <div class="search conainer-md">
@@ -27,10 +27,10 @@
         </thead>
         <tbody>
           <tr *ngFor="let member of Members | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
-            <td>{{member.first_name}}</td>
-            <td>{{member.last_name}}</td>
+            <td class="text-transform">{{member.first_name}}</td>
+            <td class="text-transform">{{member.last_name}}</td>
             <td>{{member.birth_date | date:'dd.MM.yyyy'}}</td>
-            <td>{{member.address}}</td>
+            <td class="text-transform">{{member.address}}</td>
             <td>{{member.email}}</td>
             <td>{{member.phone_number}}</td>
             <td> <button class="btn" (click)="Membership(member)" title="Membership"><fa-icon [icon]="faUserEdit"></fa-icon></button></td>

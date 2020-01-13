@@ -1,5 +1,5 @@
 <div class="container-md">
-  <h1>List of genres</h1>
+  <h1>List of Genres</h1>
     <div class="row">
 
       <div class="search conainer-md">
@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let genre of Genres | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
+          <tr class="text-transform" *ngFor="let genre of Genres | filter: searchText | paginate: {itemsPerPage: 5, currentPage: p}">
             <td>{{genre.genre_name}}</td>
 
   <div class="end">

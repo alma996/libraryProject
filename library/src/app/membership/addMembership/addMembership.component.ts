@@ -77,4 +77,8 @@ export class AddMembershipComponent {
         errorSuccess(){
           this.toastr.error('Please fill the required fields', 'Error');
         }
+
+        BackToMember(){
+          this.router.navigate(['/member']);
+        }
 }

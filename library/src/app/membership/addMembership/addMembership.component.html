@@ -1,6 +1,6 @@
 <div class="container-md">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <h2>Add new Membership</h2>
+    <h2>Add new Membership fee</h2>
     <form [formGroup]="registrationForm" (ngSubmit)="AddMembership(registrationForm.value)">
   <div class="form container-md">
       <div class="form-group">
@@ -35,7 +35,8 @@
   
      
       <div style="text-align: center;">
-      <button class="btn btn-primary" type="submit">Post Membership</button>&nbsp;&nbsp;
+        <button class="btn btn-primary" type="button" (click)="BackToMember()">Back to Member</button>&nbsp;&nbsp;
+      <button class="btn btn-primary" type="submit">Post Membership fee</button>&nbsp;&nbsp;
     </div>
     </div>
   
