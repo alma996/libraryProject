@@ -17,12 +17,18 @@ export class DamageService {
 
   baseUrl: string= "http://localhost:3000/book/:id"
   baseUrl2: string= "http://localhost:3000/book/book"
-  UrlDamage: string= "http://localhost:3000/damage/damage"
+  UrlDamage: string= "http://localhost:3000/damage"
   UrlAuthor: string= "http://localhost:3000/author/author"
   UrlMember: string= "http://localhost:3000/member/member"
+  IdUrl: string= "http://localhost:3000/damage/"
   public getAllBook(){
     return this.httpClient.get(this.baseUrl2).pipe(map(data=>
      data));
+  }
+
+  public getDamageById(id, id1){
+    return this.httpClient.get(this.IdUrl+id+'/'+id1);
+
   }
 
   public getAllDamage(){

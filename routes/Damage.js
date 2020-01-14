@@ -46,6 +46,64 @@ damage.get('/:id', (req, res) => {
     })
 })
 
+damage.get('/:damage_id/:loans_id', (req, res) => {
+  Loans.hasMany(Damage, {foreignKey: 'loans_id'})
+  Damage.belongsTo(Loans, {foreignKey: 'loans_id'})
+
+Damage.findOne({
+  attributes: ['damage_id', 'damage_description'],
+where: {damage_id: req.params.damage_id},
+   include: [{
+       model: Loans,
+       required: true,
+       where:{loans_id: req.params.loans_id},
+
+   }   
+   ]
+  })
+  .then(damage => {
+    if (damage) {
+      res.json(damage)
+    } else {
+      res.send('Damage does not exist')
+    }
+  })
+  .catch(err => {
+    res.send('error: ' + err)
+  })
+})
+
+damage.get('', (req, res) => {
+  Loans.hasMany(Damage, {foreignKey: 'loans_id'})
+  Damage.belongsTo(Loans, {foreignKey: 'loans_id'})
+
+  Member.hasMany(Loans, {foreignKey: 'member_id'})
+  Loans.belongsTo(Member, {foreignKey: 'member_id'})
+
+  Book.hasMany(Loans, {foreignKey: 'book_id'})
+  Loans.belongsTo(Book, {foreignKey: 'book_id'})
+
+Damage.findAll({
+   include: [{
+       model: Loans,
+       required: true,
+       include: [{model: Member, required: true}, {model: Book, required: true}],
+
+   }   
+   ]
+  })
+  .then(damage => {
+    if (damage) {
+      res.json(damage)
+    } else {
+      res.send('Damage does not exist')
+    }
+  })
+  .catch(err => {
+    res.send('error: ' + err)
+  })
+})
+
 
 damage.delete('/:id', (req, res)=>{
   const damageID = req.params.id

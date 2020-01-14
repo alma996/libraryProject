@@ -59,15 +59,9 @@ Loans.findOne({
   }],
    include: [{
        model: Member,
-       where: [{
-        member_id: memberID
-      }]
    },
    {
     model: Book,
-    where: [{
-      book_id: bookID
-    }]
      }]
   })
   .then(loans => {

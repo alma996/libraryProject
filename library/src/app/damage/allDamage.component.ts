@@ -10,15 +10,15 @@ import { all, allSettled } from 'q';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { map, isEmpty } from "rxjs/operators"; 
 import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { faTrash, faSearch} from '@fortawesome/free-solid-svg-icons';
-import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
+import { faTrash} from '@fortawesome/free-solid-svg-icons';
+import { faUserEdit, faSearch} from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr'
 
 @Component({
-  templateUrl: './damage.component.html',
+  templateUrl: './allDamage.component.html',
   styleUrls: ['./damage.component.css']
 })
-export class DamageComponent implements OnInit{
+export class AllDamageComponent implements OnInit{
   faTrash = faTrash;
   faUserEdit = faUserEdit;
   faSearch = faSearch
@@ -42,7 +42,7 @@ export class DamageComponent implements OnInit{
     })
 
   
-    this.http.get("http://localhost:3000/damage/"+ this.loans_id).subscribe((response) =>{
+    this.DamageService.getAllDamage().subscribe((response) =>{
       this.Damages=response;
   
     });
@@ -51,7 +51,7 @@ export class DamageComponent implements OnInit{
   
   GetAllDamages(){
     
-    this.http.get("http://localhost:3000/damage/"+ this.loans_id).subscribe((response) =>{
+    this.http.get("http://localhost:3000/damage").subscribe((response) =>{
       this.Damages=response;
   
     });
@@ -69,7 +69,7 @@ export class DamageComponent implements OnInit{
     }
 
     EditDamage(selectedItem: any){
-      this.router.navigate(['/editDamage/'+ selectedItem.damage_id + '/' + selectedItem.loans_id]);
+      this.router.navigate(['/editDamage/'+ selectedItem.damage_id+ '/' + selectedItem.loans_id]);
   
     }
 

@@ -12,6 +12,8 @@ import { faTrash} from '@fortawesome/free-solid-svg-icons';
 import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { DamageService } from '../damage.service';
+import { ToastrService } from 'ngx-toastr';
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: './addDamage.component.html',
@@ -31,7 +33,7 @@ loans_id: any;
       }
 
     
-      constructor(private DamageService: DamageService, private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private DamageService: DamageService,private toastr:ToastrService, private _location: Location, private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
 
     ngOnInit(){
@@ -48,9 +50,21 @@ loans_id: any;
         }
 
         AddDamage(damagedata){
+          if(this.registrationForm.value.damage_description !== ''){
           this.http.post("http://localhost:3000/damage/"+ this.loans_id, damagedata).subscribe((response) =>
-            this.router.navigate(['/damage/' + this.loans_id]))
-            console.log("alma", this.loans_id )
+          {this.showSuccess(response), this.router.navigate(['/damage/' + this.loans_id])}, error =>{this.errorSuccess()}, );
+          }else{
+            this.errorSuccess()
+          }
+          }
+
+
+          showSuccess(any){
+            this.toastr.success('Damage successfully added', 'Successfully');
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Please fill he required fields', 'Error');
           }
     
 }

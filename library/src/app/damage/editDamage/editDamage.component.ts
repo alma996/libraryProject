@@ -13,6 +13,8 @@ import { faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import { on } from 'cluster';
 import { DamageService } from '../damage.service';
 import {Location} from '@angular/common';
+import {ToastrService} from 'ngx-toastr';
+import { DamageModel } from '../DamageModel'
 
 
 @Component({
@@ -27,7 +29,7 @@ export class EditDamageComponent {
     loans_id: any;
     damage_description: any;
 
-      constructor(private route: ActivatedRoute, private _location: Location, DamageService: DamageService, private fb: FormBuilder, private router: Router, private http: HttpClient){
+      constructor(private route: ActivatedRoute,private toastr: ToastrService, private _location: Location,private DamageService: DamageService, private fb: FormBuilder, private router: Router, private http: HttpClient){
     }
     
 
@@ -35,8 +37,14 @@ export class EditDamageComponent {
         this.route.paramMap.subscribe(params => {
             this.damage_id = params.get('damage_id');
             this.loans_id = params.get('loans_id');
-            this.damage_description = params.get('damage_description');
           })
+
+          this.DamageService.getDamageById(this.damage_id, this.loans_id).subscribe((response: DamageModel)=>{
+            console.log(response)
+            this.damage_description = response.damage_description
+            console.log(this.damage_description)
+            console.log()
+          });
 
         this.registrationForm = this.fb.group({
         damage_id: [''],
@@ -45,14 +53,26 @@ export class EditDamageComponent {
           })
         }
 
-        EditDamage(selectedItem: any){
+        EditDamage(selectedItem: true){
 
             this.damage_id = this.registrationForm.value.damage_id,
             this.loans_id = this.registrationForm.value.loans_id,
-          this.damage_description = this.registrationForm.value.damage_description,
+          this.damage_description = this.registrationForm.value.damage_description;
       
-            this.EditDamage= selectedItem.damage_id;
-           return this.http.put("http://localhost:3000/damage/" + this.damage_id, selectedItem).subscribe(response => console.log(response)), this._location.back();
+          if(this.registrationForm.value.damage_description !== ''){
+           return this.http.put("http://localhost:3000/damage/" + this.damage_id, selectedItem).subscribe(response =>
+           {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()},);
+          }else{
+            this.errorSuccess()
+          }
+          }
+
+          showSuccess(any){
+            this.toastr.success('Damage has been successfully edited', 'Successfully');
+          }
+        
+          errorSuccess(){
+            this.toastr.error('Damage not edited, please try again', 'Error')
           }
 
 

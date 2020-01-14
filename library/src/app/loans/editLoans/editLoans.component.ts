@@ -47,14 +47,14 @@ export class EditLoansComponent {
 
         this.route.paramMap.subscribe(params => {
           this.loans_id = params.get('loans_id')
-          this.book_id = params.get('book_id')
-          this.member_id = params.get('member_id')
           })
 
           this.LoansService.getLoansById(this.loans_id,this.member_id,this.book_id).subscribe((response: LoansModel)=>{
             console.log(response);
             this.return_status = response.return_status
             this.loans_date = response.loans_date
+            this.book_id = response.book_id
+            this.member_id = response.member_id
           });
 
           this.LoansService.getAllBook().subscribe((reponse)=>{

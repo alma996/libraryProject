@@ -62,7 +62,7 @@ export class LoansComponent implements OnInit{
     }
 
     EditLoans(selectedItem: any){
-      this.router.navigate(['/editLoans/'+ selectedItem.loans_id +'/' + selectedItem.member_id + '/' + selectedItem.book_id]);
+      this.router.navigate(['/editLoans/'+ selectedItem.loans_id]);
     }
   
 

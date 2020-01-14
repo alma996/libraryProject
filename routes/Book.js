@@ -46,6 +46,58 @@ book.get('/book', (req, res) => {
     })
 })
 
+book.get('/:book_id', (req, res) => {
+  const bookID = req.params.book_id;
+  const memberID = req.params.member_id;
+
+  
+  Author.hasMany(Book, {foreignKey: 'author_id'})
+  Book.belongsTo(Author, {foreignKey: 'author_id'})
+
+  Genre.hasMany(Book, {foreignKey: 'genre_id'})
+  Book.belongsTo(Genre, {foreignKey: 'genre_id'})
+
+  Publisher.hasMany(Book, {foreignKey: 'publisher_id'})
+  Book.belongsTo(Publisher, {foreignKey: 'publisher_id'})
+
+Book.findOne({
+  attributes: ['book_id', 'book_name', 'author_id', 'publisher_id', 'genre_id'],
+  where: [{
+    book_id: bookID
+  }],
+   include: [{
+       model: Genre,
+       where: [{
+        //genre_id: req.body.genre_id
+      }]
+   },
+   {
+    model: Author,
+    where: [{
+      //author_id: req.body.author_id
+    }]
+     },
+     {
+     model: Publisher,
+     where: [{
+       //publisher_id: req.body.publisher_id
+     }]
+    }
+    ]
+  })
+  .then(book => {
+    if (book) {
+      res.json(book)
+    } else {
+      res.send('Book dos not exist')
+    }
+  })
+  .catch(err => {
+    res.send('error: ' + err)
+  })
+})
+
+
 book.delete('/:id', (req, res)=>{
   const bookID = req.params.id
   Author.hasMany(Book, {foreignKey: 'author_id'})

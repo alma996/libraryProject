@@ -14,6 +14,7 @@ import { on } from 'cluster';
 import {ToastrService} from 'ngx-toastr';
 import { BookService } from '../book.service';
 import {Location} from '@angular/common';
+import { BookModel } from '../BookModel'
 
 
 @Component({
@@ -45,12 +46,14 @@ export class EditBookComponent {
 
         this.route.paramMap.subscribe(params => {
             this.book_id = params.get('book_id');
-            this.author_id = params.get('author_id');
-            this.genre_id = params.get('genre_id');
-            this.publisher_id = params.get('publisher_id')
-            this.book_name = params.get('book_name')
-            this.book = params.get('book_name')
           })
+
+          this.BookService.getBookById(this.book_id).subscribe((response: BookModel)=>{
+            this.author_id = response.author_id
+            this.genre_id = response.genre_id
+            this.publisher_id = response.publisher_id
+            this.book_name = response.book_name
+          });
 
           this.BookService.getAllGenre().subscribe((reponse)=>{
             this.Genres=reponse;

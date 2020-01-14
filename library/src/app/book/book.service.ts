@@ -17,9 +17,17 @@ export class BookService {
 
   baseUrl: string= "http://localhost:3000/book/:id"
   baseUrl2: string= "http://localhost:3000/book/book"
+  IdUrl: string= "http://localhost:3000/book/"
   UrlGenre: string= "http://localhost:3000/genre/genre"
   UrlAuthor: string= "http://localhost:3000/author/author"
   UrlPublisher: string= "http://localhost:3000/publisher/publisher"
+
+
+  public getBookById(id){
+    return this.httpClient.get(this.IdUrl+id);
+
+  }
+
   public getAllBook(){
     return this.httpClient.get(this.baseUrl2).pipe(map(data=>
      data));

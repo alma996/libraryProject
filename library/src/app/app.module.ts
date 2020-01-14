@@ -41,6 +41,7 @@ import { EditLoansComponent } from './loans/editLoans/editLoans.component'
 import { AddDamageComponent } from './damage/addDamage/addDamage.component'
 import { EditDamageComponent } from './damage/editDamage/editDamage.component'
 import { AllMembershipComponent } from './membership/allMembership.component'
+import { AllDamageComponent } from './damage/allDamage.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -64,13 +65,14 @@ const routes: Routes = [
   { path: 'addPublisher', component: AddPublisherComponent },
   { path: 'book', component: BookComponent },
   { path: 'addBook', component: AddBookComponent },
-  { path: 'editBook/:book_id/:genre_id/:author_id/:publisher_id/:book_name', component: EditBookComponent },
+  { path: 'editBook/:book_id', component: EditBookComponent },
   { path: 'loans', component: LoansComponent },
   { path: 'addLoans', component: AddLoansComponent },
-  { path: 'editLoans/:loans_id/:member_id/:book_id', component: EditLoansComponent },
+  { path: 'editLoans/:loans_id', component: EditLoansComponent },
   { path: 'damage/:loans_id', component: DamageComponent },
   { path: 'addDamage/:loans_id', component: AddDamageComponent},
-  { path: 'editDamage/:damage_id/:loans_id/:damage_description', component: EditDamageComponent },
+  { path: 'editDamage/:damage_id/:loans_id', component: EditDamageComponent },
+  { path: 'damage', component: AllDamageComponent},
 
   {
     path: 'profile',
@@ -110,7 +112,8 @@ const routes: Routes = [
     EditLoansComponent,
     DamageComponent,
     AddDamageComponent,
-    EditDamageComponent
+    EditDamageComponent,
+    AllDamageComponent
   ],
   imports: [
     BrowserModule,

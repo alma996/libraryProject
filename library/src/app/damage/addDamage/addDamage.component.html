@@ -6,7 +6,7 @@
       <div class="form-group">
         <label>Damage description</label>
         <input [class.is-invalid]="damage_description.invalid
-          && damage_description.touched" type="text" class="form-control" formControlName="damage_description" ngModel>
+          && damage_description.touched" type="text" class="form-control" formControlName="damage_description" ngModel required>
   
         <div *ngIf="damage_description.invalid && damage_description.touched">
           <small *ngIf="damage_description.errors ?.required" class="text-danger">Damage description is required</small>
