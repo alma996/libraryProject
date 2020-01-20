@@ -20,7 +20,7 @@ module.exports = db.sequelize.define(
       type: Sequelize.STRING
     },
     password: {
-      type: Sequelize.VIRTUAL
+      type: Sequelize.STRING
     },
     created: {
       type: Sequelize.DATE,
