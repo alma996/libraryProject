@@ -20,7 +20,7 @@ module.exports = db.sequelize.define(
       type: Sequelize.STRING
     },
     password: {
-      type: Sequelize.STRING
+      type: Sequelize.VIRTUAL
     },
     created: {
       type: Sequelize.DATE,
@@ -29,6 +29,15 @@ module.exports = db.sequelize.define(
   },
   {
 
+    /*hooks : {
+      beforeCreate : (user , options) => {
+          {
+              user.password = user.password && user.password != "" ? bcrypt.hashSync(user.password, 10) : "";
+
+          }
+          
+        }},
+*/
     timestamps: false
   }
 )

@@ -22,7 +22,7 @@ module.exports = {
         
         },
       date_of_payment: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
       year: {

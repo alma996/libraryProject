@@ -2,7 +2,6 @@ const express = require('express')
 const users = express.Router()
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
-
 const User = require('../models/User')
 users.use(cors())
 
@@ -50,8 +49,8 @@ users.post('/login', (req, res) => {
   User.findOne({
     where: {
       email: req.body.email,
-      password: req.body.password
-    }
+      password: req.body.password,
+    },
   })
     .then(user => {
       if (user) {

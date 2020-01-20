@@ -32,7 +32,7 @@ module.exports = {
           allowNull: false,
         },
       loans_date: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
       return_status: {
