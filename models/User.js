@@ -29,15 +29,17 @@ module.exports = db.sequelize.define(
   },
   {
 
-    /*hooks : {
-      beforeCreate : (user , options) => {
+    hooks : {
+      
+        beforeCreate : async (user , options) => {
           {
-              user.password = user.password && user.password != "" ? bcrypt.hashSync(user.password, 10) : "";
+            let t=await bcrypt.hash(user.password, 10)
+            console.log("======================= ",t)
+            user.password= t
+          }
 
           }
-          
-        }},
-*/
-    timestamps: false
-  }
-)
+        },
+
+    timestamps: false,
+  })

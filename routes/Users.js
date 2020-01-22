@@ -3,11 +3,14 @@ const users = express.Router()
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
+const bcrypt = require('bcryptjs')
+
 users.use(cors())
 
 process.env.SECRET_KEY = 'secret'
 
-users.post('/register', (req, res) => {
+users.post('/register', async (req, res) => {
+  const hash= await bcrypt.hash(req.body.password,7)
   const today = new Date()
   const userData = {
     first_name: req.body.first_name,
@@ -26,7 +29,7 @@ users.post('/register', (req, res) => {
     .then(user => {
       if (!user) {
         User.create(userData)
-          .then(user => {
+          .then(user => { 
             let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
               expiresIn: 1440
             })
@@ -45,15 +48,24 @@ users.post('/register', (req, res) => {
 })
 
 //LOGIN
-users.post('/login', (req, res) => {
-  User.findOne({
+users.post('/login', async(req, res) => {
+  
+  await User.findOne({
     where: {
-      email: req.body.email,
-      password: req.body.password
+      email: req.body.email
     },
   })
-    .then(user => {
+    .then(async user => {
+      console.log("useruseruseruser ",user)
       if (user) {
+
+      
+        let validPAssword= await bcrypt.compare(req.body.password,user.password)
+        
+      if(!validPAssword){
+        return res.send('Password not same')
+      }
+
         let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
           expiresIn: 1440
         })
@@ -63,7 +75,7 @@ users.post('/login', (req, res) => {
       }
     })
     .catch(err => {
-      res.send('error: ' + err)
+      res.send('error: ' + err,)
     })
 })
 

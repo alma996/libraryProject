@@ -45,11 +45,21 @@ export class AddAuthorComponent {
           last_name: [''],
           })
         }
-
+fun(){
+  console.log("usooo 1")
+  if(document.referrer == '/author'){
+    console.log("usooo 2")
+    this.router.navigate(['/author'])
+  }else{
+      console.log("usooo 3")
+      this._location.go(document.referrer);
+      //this.router.navigate([document.referrer])
+      }
+}
         AddAuthor(authordata){
           if(this.registrationForm.value.first_name !== '', this.registrationForm.value.last_name !== ''){
             this.AuthorService.addAuthors(authordata).subscribe((response)=>
-            {this.showSuccess(response), this._location.back()}, error =>{this.errorSuccess()}, );
+            {this.showSuccess(response), this.fun()}, error =>{this.errorSuccess()}, );
           }else{
             this.errorSuccess();
           }

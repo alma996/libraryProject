@@ -39,7 +39,7 @@ export class EditBookComponent {
     Publishers: any;
 
       constructor( private toastr: ToastrService,private _location: Location, private route: ActivatedRoute, private BookService: BookService, private fb: FormBuilder, private router: Router, private http: HttpClient){
-    }
+      }
     
 
     ngOnInit(){
@@ -78,6 +78,18 @@ export class EditBookComponent {
           book_name: [''],
           })
 
+        }
+
+        AddGenre(){
+          this.router.navigate(['/addGenre'])
+        }
+
+        AddAuthor(){
+          this.router.navigate(['/addAuthor'])
+        }
+
+        AddPublisher(){
+          this.router.navigate(['/addPublisher'])
         }
 
         EditBook(selectedItem: true){
